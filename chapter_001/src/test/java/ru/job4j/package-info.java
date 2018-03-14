@@ -1,0 +1,8 @@
+/**
+* Package for calculate task.
+*
+* @author Ksenya Kaysheva (murrcha@me.com)
+* @version $Id$
+* @since 0.1
+*/
+package ru.jo4j;
