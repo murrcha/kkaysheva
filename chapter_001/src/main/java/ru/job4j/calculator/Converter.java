@@ -1,11 +1,10 @@
 package ru.job4j.calculator;
 
 /**
- *
  * Converter.
  *
  * 1 dollar = 60 ruble
- * 1 euro - 70 ruble
+ * 1 euro = 70 ruble
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
