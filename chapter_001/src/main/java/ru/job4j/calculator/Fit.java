@@ -10,12 +10,19 @@ package ru.job4j.calculator;
 public class Fit {
 
     /**
+     * Константы используемы в формуле идеального веса
+     */
+    private static final int VALUE_FOR_MAN = 100;
+    private static final int VALUE_FOR_WOMAN = 110;
+    private static final double INDEX = 1.15;
+
+    /**
      * Method manWeight - идеальный вес для мужчины
      * @param height - рост
      * @return weight - идеальный вес
      */
     public double manWeight(double height) {
-        return (height - 100) * 1.15;
+        return (height - VALUE_FOR_MAN) * INDEX;
     }
 
     /**
@@ -24,6 +31,6 @@ public class Fit {
      * @return weight - идеальный вес
      */
     public double womanWeight(double height) {
-        return (height - 110) * 1.15;
+        return (height - VALUE_FOR_WOMAN) * INDEX;
     }
 }

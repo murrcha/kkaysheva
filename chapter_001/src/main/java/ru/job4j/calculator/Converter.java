@@ -15,8 +15,8 @@ public class Converter {
     /**
      *  kurs euro and dollar to one ruble
      */
-    private final int kursEuro = 70;
-    private final int kursDollar = 60;
+    private static final int KURS_EURO = 70;
+    private static final int KURS_DOLLAR = 60;
 
     /**
      * Method rubleToEuro - convert ruble to euro
@@ -24,7 +24,7 @@ public class Converter {
      * @return value euro
      */
     public int rubleToEuro(int value) {
-        return value / kursEuro;
+        return value / KURS_EURO;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Converter {
      * @return value dollar
      */
     public int rubleToDollar(int value) {
-        return value / kursDollar;
+        return value / KURS_DOLLAR;
     }
 
     /**
@@ -42,7 +42,7 @@ public class Converter {
      * @return value ruble
      */
     public int euroToRuble(int value) {
-        return value * kursEuro;
+        return value * KURS_EURO;
     }
 
     /**
@@ -51,6 +51,6 @@ public class Converter {
      * @return value ruble
      */
     public int dollarToRuble(int value) {
-        return value * kursDollar;
+        return value * KURS_DOLLAR;
     }
 }
