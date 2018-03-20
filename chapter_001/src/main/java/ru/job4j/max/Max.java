@@ -10,12 +10,24 @@ package ru.job4j.max;
 public class Max {
 
     /**
-     * Method max - максимум из двух чисел
+     * Method maximum - максимум из двух чисел
      * @param first - первое число
      * @param second - второе число
      * @return - максимум из двух чисел
      */
     public int maximum(int first, int second) {
         return first >= second ? first : second;
+    }
+
+    /**
+     * Method maximum - максимум из трех чисел
+     * @param first - первое число
+     * @param second - второе число
+     * @param third - третье число
+     * @return - максимум из трех чисел
+     */
+    public int maximum(int first, int second, int third) {
+        int temp = maximum(first, second);
+        return maximum(temp, third);
     }
 }
