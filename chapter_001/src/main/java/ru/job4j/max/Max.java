@@ -27,7 +27,6 @@ public class Max {
      * @return - максимум из трех чисел
      */
     public int maximum(int first, int second, int third) {
-        int temp = maximum(first, second);
-        return maximum(temp, third);
+        return maximum(maximum(first, second), third);
     }
 }
