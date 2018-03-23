@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Max Test
  *
- * @author Ksenya Kaysheva
+ * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
  * @since 0.1
  */
