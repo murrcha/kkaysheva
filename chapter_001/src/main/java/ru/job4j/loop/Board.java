@@ -1,7 +1,7 @@
 package ru.job4j.loop;
 
 /**
- * Board
+ * Board - рисование шахматной доски из символов "Х" и пробелов
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
@@ -10,7 +10,7 @@ package ru.job4j.loop;
 public class Board {
 
     /**
-     * Method paint - рисует шахматную доску из символов "х" и пробелов
+     * Method paint - рисует шахматную доску из символов "Х" и пробелов
      * @param width - ширина доски
      * @param height - высота доски
      * @return - строка в виде шахматной доски
