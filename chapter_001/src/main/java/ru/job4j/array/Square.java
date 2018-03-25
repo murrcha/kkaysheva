@@ -12,7 +12,7 @@ public class Square {
     /**
      * Method calculate - заполняет массив числами от 1 до bound, возведенными в квадрат
      * @param bound - размер массива
-     * @return - заполненный массив
+     * @return заполненный массив
      */
     public int[] calculate(int bound) {
         int[] result = new int[bound];
