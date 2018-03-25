@@ -10,7 +10,7 @@ package ru.job4j.array;
 public class FindLoop {
 
     /**
-     * Method indexOf - возвращается индекс массива, если элемен найден
+     * Method indexOf - возвращается индекс массива, если элемент найден
      * @param data - массив, в котором ищем
      * @param element - элемент, который ищем
      * @return индекс массива, если найден, иначе -1
