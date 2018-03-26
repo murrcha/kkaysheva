@@ -1,5 +1,7 @@
 package ru.job4j.array;
 
+import java.util.Arrays;
+
 /**
  * Matrix - вывод таблицы умножения
  *
@@ -15,18 +17,12 @@ public class Matrix {
      * @return заполненный массив
      */
     public int[][] multiple(int size) {
-        int[][] matrix = new int[(size + 1)][(size + 1)];
-        for (int i = 0; i <= size; i++) {
-            for (int j = 0; j <= size; j++) {
-                if (i == 0 && j == 0) {
-                    matrix [i][j] = 0;
-                } else if (i == 0 && j != 0) {
-                    matrix[i][j] = j;
-                } else if (i != 0 && j == 0) {
-                    matrix[i][j] = i;
-                } else {
-                    matrix[i][j] = i * j;
-                }
+        int[][] matrix = new int[size][size];
+        for (int out = 0; out < matrix.length; out++) {
+            matrix[0][out] = out;
+            for (int in = 0; in < matrix.length; in++) {
+                matrix[in][0] = in;
+                matrix[out][in] = in * out;
             }
         }
         return matrix;

@@ -18,7 +18,7 @@ public class MatrixTest {
      */
     @Test
     public void whenMatrixWithSize5ThenFullMatrix() {
-        int size = 5;
+        int size = 6;
         Matrix matrix = new Matrix();
         int[][] result = matrix.multiple(size);
         int[][] expected =
@@ -38,22 +38,7 @@ public class MatrixTest {
      */
     @Test
     public void whenMatrixWithSize0ThenFullMatrix() {
-        int size = 0;
-        Matrix matrix = new Matrix();
-        int[][] result = matrix.multiple(size);
-        int[][] expected =
-                {
-                        {0}
-                };
-        assertThat(result, is(expected));
-    }
-
-    /**
-     * Test multiple
-     */
-    @Test
-    public void whenMatrixWithSize1ThenFullMatrix() {
-        int size = 1;
+        int size = 2;
         Matrix matrix = new Matrix();
         int[][] result = matrix.multiple(size);
         int[][] expected =
