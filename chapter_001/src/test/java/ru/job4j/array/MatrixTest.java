@@ -18,17 +18,16 @@ public class MatrixTest {
      */
     @Test
     public void whenMatrixWithSize5ThenFullMatrix() {
-        int size = 6;
+        int size = 5;
         Matrix matrix = new Matrix();
         int[][] result = matrix.multiple(size);
         int[][] expected =
                 {
-                        {0, 1, 2, 3, 4, 5},
-                        {1, 1, 2, 3, 4, 5},
-                        {2, 2, 4, 6, 8, 10},
-                        {3, 3, 6, 9, 12, 15},
-                        {4, 4, 8, 12, 16, 20},
-                        {5, 5, 10, 15, 20, 25}
+                        {1, 2, 3, 4, 5},
+                        {2, 4, 6, 8, 10},
+                        {3, 6, 9, 12, 15},
+                        {4, 8, 12, 16, 20},
+                        {5, 10, 15, 20, 25}
                 };
         assertThat(result, is(expected));
     }
@@ -43,8 +42,8 @@ public class MatrixTest {
         int[][] result = matrix.multiple(size);
         int[][] expected =
                 {
-                        {0, 1},
-                        {1, 1}
+                        {1, 2},
+                        {2, 4}
                 };
         assertThat(result, is(expected));
     }

@@ -18,11 +18,9 @@ public class Matrix {
      */
     public int[][] multiple(int size) {
         int[][] matrix = new int[size][size];
-        for (int out = 0; out < matrix.length; out++) {
-            matrix[0][out] = out;
-            for (int in = 0; in < matrix.length; in++) {
-                matrix[in][0] = in;
-                matrix[out][in] = in * out;
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                matrix[row][column] = (column + 1) * (row + 1);
             }
         }
         return matrix;
