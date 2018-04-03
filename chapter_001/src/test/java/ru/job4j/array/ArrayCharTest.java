@@ -32,4 +32,24 @@ public class ArrayCharTest {
         boolean result = word.startWith("ing");
         assertThat(result, is(false));
     }
+
+    /**
+     * Test contains
+     */
+    @Test
+    public void whenStringContainsSubstringThenReturnTrue() {
+        ArrayChar word = new  ArrayChar();
+        boolean result = word.contains("CAACCAG", "CAG");
+        assertThat(result, is(true));
+    }
+
+    /**
+     * Test contains
+     */
+    @Test
+    public void whenStringNotContainsSubstringThenReturnFalse() {
+        ArrayChar word = new  ArrayChar();
+        boolean result = word.contains("CAACCAG", "ACA");
+        assertThat(result, is(false));
+    }
 }

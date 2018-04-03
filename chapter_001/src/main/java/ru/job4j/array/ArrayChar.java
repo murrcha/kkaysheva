@@ -23,6 +23,13 @@ public class ArrayChar {
     }
 
     /**
+     * Конструктор без параметров - массив data не инициализируется
+     */
+    public ArrayChar() {
+
+    }
+
+    /**
      * Method startWith - проверяет, что слово начинается с префикса
      * @param prefix - префикс
      * @return результат проверки
@@ -36,6 +43,41 @@ public class ArrayChar {
             for (int index = 0; index < value.length; index++) {
                 if (value[index] != this.data[index]) {
                     result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Method contains - поиск подстроки в строке
+     * @param origin - строка
+     * @param sub - подстрока
+     * @return результат поиска
+     */
+    public boolean contains(String origin, String sub) {
+        boolean result = false;
+        char[] originArray = origin.toCharArray();
+        char[] subArray = sub.toCharArray();
+        if (subArray.length > originArray.length) {
+            result = false;
+        } else {
+            for (int shift = 0; shift < originArray.length - subArray.length + 1; shift++) {
+                for (int entry = 0; entry < subArray.length; entry++) {
+                    if (originArray[shift] != subArray[entry]) {
+                        if (entry != 0) {
+                            shift--;
+                        }
+                        break;
+                    } else {
+                        if (entry == subArray.length - 1) {
+                            result = true;
+                        }
+                        shift++;
+                    }
+                }
+                if (result) {
                     break;
                 }
             }
