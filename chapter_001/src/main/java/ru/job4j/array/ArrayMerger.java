@@ -1,13 +1,13 @@
 package ru.job4j.array;
 
 /**
- * ArrayMerge - слияние двух массивов в один
+ * ArrayMerger - слияние двух массивов в один
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
  * @since 0.1
  */
-public class ArrayMerge {
+public class ArrayMerger {
 
     /**
      * Method merge - слияние двух отсортированных массивов в один отсортированный

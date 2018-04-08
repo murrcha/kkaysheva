@@ -18,10 +18,10 @@ public class FindLoopTest {
      */
     @Test
     public void whenArrayHasElement5ThenIndex0() {
-        FindLoop find = new FindLoop();
+        FindLoop finder = new FindLoop();
         int[] input = new int[] {5, 10, 3};
         int value = 5;
-        int result = find.indexOf(input, value);
+        int result = finder.indexOf(input, value);
         int expected = 0;
         assertThat(result, is(expected));
     }
@@ -31,10 +31,10 @@ public class FindLoopTest {
      */
     @Test
     public void whenArrayHasNoElement7ThenIndexMinus1() {
-        FindLoop find = new FindLoop();
+        FindLoop finder = new FindLoop();
         int[] input = new int[] {5, 10, 3};
         int value = 7;
-        int result = find.indexOf(input, value);
+        int result = finder.indexOf(input, value);
         int expected = -1;
         assertThat(result, is(expected));
     }
@@ -44,10 +44,10 @@ public class FindLoopTest {
      */
     @Test
     public void whenArrayHasTwoElements5ThenIndex0() {
-        FindLoop find = new FindLoop();
+        FindLoop finder = new FindLoop();
         int[] input = new int[] {5, 5, 10, 3};
         int value = 5;
-        int result = find.indexOf(input, value);
+        int result = finder.indexOf(input, value);
         int expected = 0;
         assertThat(result, is(expected));
     }

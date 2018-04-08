@@ -19,8 +19,8 @@ public class BubbleSortTest {
     @Test
     public void whenSortArrayWithTenElementsThenSortedArray() {
         int[] input = new int[] {10, 3, 5, 2, 1, 4, 7, 6, 9, 8};
-        BubbleSort bubbleSort = new BubbleSort();
-        int[] result = bubbleSort.sort(input);
+        BubbleSort sorter = new BubbleSort();
+        int[] result = sorter.sort(input);
         int[] expected = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         assertThat(result, is(expected));
     }

@@ -18,8 +18,8 @@ public class DummyBotTest {
      */
     @Test
     public void whenGreetBot() {
-        DummyBot dummyBot = new DummyBot();
-        assertThat(dummyBot.answer("Привет, Бот"),
+        DummyBot bot = new DummyBot();
+        assertThat(bot.answer("Привет, Бот"),
                 is("Привет, умник."));
     }
 
@@ -28,8 +28,8 @@ public class DummyBotTest {
      */
     @Test
     public void whenBuyBot() {
-        DummyBot dummyBot = new DummyBot();
-        assertThat(dummyBot.answer("Пока"),
+        DummyBot bot = new DummyBot();
+        assertThat(bot.answer("Пока"),
                 is("До скорой встречи."));
     }
 
@@ -38,8 +38,8 @@ public class DummyBotTest {
      */
     @Test
     public void whenUnknownBot() {
-        DummyBot dummyBot = new DummyBot();
-        assertThat(dummyBot.answer("Как тебя зовут?"),
+        DummyBot bot = new DummyBot();
+        assertThat(bot.answer("Как тебя зовут?"),
                 is("Это ставит меня в тупик. Спросите другой вопрос."));
     }
 }
