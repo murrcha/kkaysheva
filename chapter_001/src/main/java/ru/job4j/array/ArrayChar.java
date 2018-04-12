@@ -60,9 +60,7 @@ public class ArrayChar {
         boolean result = false;
         char[] originArray = origin.toCharArray();
         char[] subArray = sub.toCharArray();
-        if (subArray.length > originArray.length) {
-            result = false;
-        } else {
+        if (subArray.length <= originArray.length) {
             for (int shift = 0; shift < originArray.length - subArray.length + 1; shift++) {
                 for (int entry = 0; entry < subArray.length; entry++) {
                     if (originArray[shift] != subArray[entry]) {
