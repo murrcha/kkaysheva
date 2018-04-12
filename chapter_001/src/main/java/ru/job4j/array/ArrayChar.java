@@ -61,22 +61,15 @@ public class ArrayChar {
         char[] originArray = origin.toCharArray();
         char[] subArray = sub.toCharArray();
         if (subArray.length <= originArray.length) {
-            for (int shift = 0; shift < originArray.length - subArray.length + 1; shift++) {
+            for (int shift = 0; shift <= originArray.length - subArray.length; shift++) {
                 for (int entry = 0; entry < subArray.length; entry++) {
-                    if (originArray[shift] != subArray[entry]) {
-                        if (entry != 0) {
-                            shift--;
-                        }
+                    if (originArray[shift + entry] != subArray[entry]) {
                         break;
                     } else {
                         if (entry == subArray.length - 1) {
                             result = true;
                         }
-                        shift++;
                     }
-                }
-                if (result) {
-                    break;
                 }
             }
         }
