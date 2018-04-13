@@ -1,5 +1,4 @@
-package ru.job4j.profession;
-
+package ru.job4j.professions;
 /**
  * Profession - базовый класс профессий
  *
@@ -11,9 +10,12 @@ public class Profession {
     /**
      * name - имя профессии
      */
-    private String name;
+    protected String name;
     /**
-     * profession - профессия
+     * Method getName - возвращает поле name
+     * @return name
      */
-    private String profession;
+    public String getName() {
+        return name;
+    }
 }
