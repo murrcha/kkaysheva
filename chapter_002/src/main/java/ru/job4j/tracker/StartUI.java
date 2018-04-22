@@ -89,8 +89,13 @@ public class StartUI {
      */
     private void showAllItems() {
         System.out.println("----------Вывод всех заявок----------");
-        for (Item item : this.tracker.findAll()) {
-            System.out.println(item.getId() + " " + item.getName() + " " + item.getDescription());
+        Item[] items = this.tracker.findAll();
+        if (items.length == 0) {
+            System.out.println("----------Заявок нет----------");
+        } else {
+            for (Item item : items) {
+                System.out.println(item.getId() + " " + item.getName() + " " + item.getDescription());
+            }
         }
     }
 
