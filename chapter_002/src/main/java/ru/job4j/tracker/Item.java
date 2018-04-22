@@ -52,6 +52,16 @@ public class Item {
     }
 
     /**
+     * Конструктор - инициализирует поля
+     * @param name - имя
+     * @param description - описание
+     */
+    public Item(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    /**
      * Method getId - получает идентификатор заявки
      * @return идентификатор заявки
      */
