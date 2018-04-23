@@ -111,7 +111,7 @@ public class StartUI {
             String description = this.input.ask("Введите новое описание заявки: ");
             Item newItem = new Item(name, description);
             this.tracker.replace(existingItem.getId(), newItem);
-            System.out.println("Изменена заявка ID: " + newItem.getId() + "| Имя: " + newItem.getName() + "| Описание: " + newItem.getDescription());
+            System.out.println("Изменена заявка ID: " + existingItem.getId() + "| Имя: " + existingItem.getName() + "| Описание: " + existingItem.getDescription());
         } else {
             System.out.println("Заявка ID: " + id + " не найдена");
         }
@@ -167,6 +167,7 @@ public class StartUI {
      * Method showMenu - выводит меню в консоль
      */
     private void showMenu() {
+        System.out.println();
         System.out.println("---------Меню:-----------");
         System.out.println("0. Добавление новой заявки");
         System.out.println("1. Вывод всех заявок");
