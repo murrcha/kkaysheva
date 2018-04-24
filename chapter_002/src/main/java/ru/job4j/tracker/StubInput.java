@@ -20,7 +20,7 @@ public class StubInput implements Input {
     private int position = 0;
 
     /**
-     * Конструктор - инициализация value
+     * Конструктор - инициализация answers
      * @param answers
      */
     public StubInput(String[] answers) {
