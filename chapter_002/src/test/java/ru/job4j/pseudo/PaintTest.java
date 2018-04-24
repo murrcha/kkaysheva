@@ -1,5 +1,7 @@
 package ru.job4j.pseudo;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -18,13 +20,36 @@ import static org.hamcrest.Matchers.is;
 public class PaintTest {
 
     /**
+     * Дефолтный вывод в консоль
+     */
+    private final PrintStream stdOut = System.out;
+
+    /**
+     * Буфер для вывода результата
+     */
+    private ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    /**
+     * Включает вывод результата в буфер
+     */
+    @Before
+    public void loadOutput() {
+        System.setOut(new PrintStream(out));
+    }
+
+    /**
+     * Возвращает дефолтный вывод в консоль
+     */
+    @After
+    public void backOutput() {
+        System.setOut(stdOut);
+    }
+
+    /**
      * Test draw square
      */
     @Test
     public void whenPaintDrawSquare() {
-        PrintStream stdOut = System.out;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
         new Paint().draw(new Square());
         assertThat(new String(out.toByteArray()),
                 is(
@@ -37,7 +62,6 @@ public class PaintTest {
                                 .toString()
                 )
         );
-        System.setOut(stdOut);
     }
 
     /**
@@ -45,9 +69,6 @@ public class PaintTest {
      */
     @Test
     public void whenPaintDrawTriangle() {
-        PrintStream stdOut = System.out;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
         new Paint().draw(new Triangle());
         assertThat(new String(out.toByteArray()),
                 is(
@@ -60,6 +81,5 @@ public class PaintTest {
                                 .toString()
                 )
         );
-        System.setOut(stdOut);
     }
 }
