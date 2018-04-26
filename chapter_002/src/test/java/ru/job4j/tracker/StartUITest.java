@@ -318,8 +318,6 @@ public class StartUITest {
      */
     @Test
     public void whenUserFindItemByIdWithFakeIdThenNotFoundItem() {
-        //Item testItem = testTracker.add(new Item("test", "test"));
-        //String testId = testItem.getId();
         testInput = new StubInput(new String[] {"4", "123", "6"});
         new StartUI(testInput, testTracker).init();
         assertThat(new String(out.toByteArray()),

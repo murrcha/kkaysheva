@@ -13,6 +13,11 @@ import java.util.Random;
 public class Tracker {
 
     /**
+     * Объект для генерации случайного числа
+     */
+    private static final Random RN = new Random();
+
+    /**
      * Массив для хранения заявок
      */
     private final Item[] items = new Item[100];
@@ -21,11 +26,6 @@ public class Tracker {
      * Указатель ячейки для новой заявки
      */
     private int position = 0;
-
-    /**
-     * Объект для генерации случайного числа
-     */
-    private static final Random RN = new Random();
 
     /**
      * Method add - добавляет новую заявку
