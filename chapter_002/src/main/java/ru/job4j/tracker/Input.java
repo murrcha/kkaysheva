@@ -15,4 +15,12 @@ public interface Input {
      * @return введенные данные пользователем
      */
     String ask(String question);
+
+    /**
+     * Method ask - запрашивает данные у пользователя
+     * @param question - запрос данных
+     * @param range диапазон возможных ответов
+     * @return выбор пользователя
+     */
+    int ask(String question, int[] range);
 }

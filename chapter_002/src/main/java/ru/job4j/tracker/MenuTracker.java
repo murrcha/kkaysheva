@@ -47,6 +47,11 @@ class EditItem implements UserAction {
 public class MenuTracker {
 
     /**
+     * Диапазон допустимых номеров пунктов меню
+     */
+    private final static int[] RANGE = new int[] {0, 1, 2, 3, 4, 5, 6};
+
+    /**
      * Ввод
      */
     private Input input;
@@ -69,6 +74,14 @@ public class MenuTracker {
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
+    }
+
+    /**
+     * Method getRange - возвращает значение поля range
+     * @return range
+     */
+    public int[] getRange() {
+        return MenuTracker.RANGE;
     }
 
     /**
@@ -237,6 +250,9 @@ public class MenuTracker {
         }
     }
 
+    /**
+     * FindItemByName - поиск заявок по имени
+     */
     private class FindItemsByName implements UserAction {
 
         @Override
@@ -271,6 +287,9 @@ public class MenuTracker {
 
     }
 
+    /**
+     * Exit - выход из программы
+     */
     private class Exit implements UserAction {
 
         @Override

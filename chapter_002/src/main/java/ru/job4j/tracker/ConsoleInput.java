@@ -26,4 +26,27 @@ public class ConsoleInput implements Input {
         System.out.print(question);
         return scanner.nextLine();
     }
+
+    /**
+     * Method ask - запрашивает данные у пользователя через консоль
+     * @param question - запрос
+     * @param range - диапазон
+     * @return -
+     */
+    @Override
+    public int ask(String question, int[] range) {
+        int key = Integer.valueOf(ask(question));
+        boolean exist = false;
+        for (int value : range) {
+            if (value == key) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutException("Номер пункта меню вне диапазона");
+        }
+    }
 }

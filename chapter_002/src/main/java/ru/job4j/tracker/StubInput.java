@@ -36,4 +36,27 @@ public class StubInput implements Input {
     public String ask(String question) {
         return this.answers[this.position++];
     }
+
+    /**
+     * Method ask - возвращает выбор пользователя
+     * @param question - вопрос
+     * @param range - диапазон
+     * @return выбор пользователя
+     */
+    @Override
+    public int ask(String question, int[] range) {
+        int key = Integer.valueOf(ask(question));
+        boolean exist = false;
+        for (int value : range) {
+            if (value == key) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutException("Номер пункта меню вне диапазона");
+        }
+    }
 }
