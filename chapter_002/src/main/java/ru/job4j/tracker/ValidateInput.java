@@ -7,7 +7,30 @@ package ru.job4j.tracker;
  * @version $Id$
  * @since 0.1
  */
-public class ValidateInput extends ConsoleInput {
+public class ValidateInput implements Input {
+
+    /**
+     * Источник данных
+     */
+    private final Input input;
+
+    /**
+     * Конструктор - инициализирует поле input
+     * @param input источник данных
+     */
+    public ValidateInput(Input input) {
+        this.input = input;
+    }
+
+    /**
+     * Method ask - возвращает выбор пользователя
+     * @param question - запрос данных
+     * @return выбор пользователя
+     */
+    @Override
+    public String ask(String question) {
+        return this.input.ask(question);
+    }
 
     /**
      * Method ask обрабатывает исключения
@@ -21,7 +44,7 @@ public class ValidateInput extends ConsoleInput {
         int value = -1;
         do {
             try {
-                value = super.ask(question, range);
+                value = this.input.ask(question, range);
                 invalid = false;
             } catch (MenuOutException moe) {
                 System.out.println("Номер вне допустимого диапазона пунктов меню");
