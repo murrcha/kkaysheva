@@ -54,7 +54,7 @@ public class ValidateInputTest {
                 new StubInput(new String[] {"invalid", "1"})
         );
         testInput.ask("Enter", new int[] {1});
-        assertThat(this.memory.toString(), is(String.format("Некорректный формат номера пункта меню\n")));
+        assertThat(this.memory.toString(), is(String.format("Некорректный формат номера пункта меню%s", System.lineSeparator())));
     }
 
     /**
@@ -66,6 +66,6 @@ public class ValidateInputTest {
                 new StubInput(new String[] {"-1", "1"})
         );
         testInput.ask("Enter", new int[] {1});
-        assertThat(this.memory.toString(), is(String.format("Номер вне допустимого диапазона пунктов меню\n")));
+        assertThat(this.memory.toString(), is(String.format("Номер вне допустимого диапазона пунктов меню%s", System.lineSeparator())));
     }
 }
