@@ -1,0 +1,15 @@
+language: java
+sudo: false
+
+# После выполнения сборки запустить скрипт для сбора статистики по JaCoCo
+# Используется сторонний сервис https://codecov.io
+after success:
+  - bash <(curl -s https://codecov.io/bash)
+
+# Отправляет уведомления на почту
+notifications:
+  email:
+    recipients:
+      - murrcha@me.com
+    on_success: change # default: change
+    on_failure: always # default: always
