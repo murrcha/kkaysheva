@@ -96,7 +96,7 @@ public class BoardTest {
     /**
      * Test invalid move
      */
-    @Test
+    @Test(expected = OccupiedWayException.class)
     public void whenMoveFigureOnOtherFigureThenReturnOccupiedWayException() {
         Board testBoard = new Board();
         Cell positionFirstBishop = new Cell(1, 1);
@@ -105,19 +105,13 @@ public class BoardTest {
         Cell positionSecondBishop = new Cell(2, 2);
         Bishop secondBishop = new Bishop(positionSecondBishop);
         testBoard.add(secondBishop);
-        String error = "";
-        try {
-            testBoard.move(positionFirstBishop, positionSecondBishop);
-        } catch (OccupiedWayException owe) {
-            error = owe.toString();
-        }
-        assertThat(error, is("ru.job4j.chessboard.OccupiedWayException: На пути есть другие фигуры"));
+        testBoard.move(positionFirstBishop, positionSecondBishop);
     }
 
     /**
      * Test invalid move
      */
-    @Test
+    @Test(expected = FigureNotFoundException.class)
     public void whenMoveEmptyFigureThenReturnFigureNotFoundException() {
         Board testBoard = new Board();
         Cell source = new Cell(1, 1);
@@ -125,12 +119,6 @@ public class BoardTest {
         Cell positionBishop = new Cell(3, 3);
         Bishop bishop = new Bishop(positionBishop);
         testBoard.add(bishop);
-        String error = "";
-        try {
-            testBoard.move(source, destination);
-        } catch (FigureNotFoundException ffe) {
-            error = ffe.toString();
-        }
-        assertThat(error, is("ru.job4j.chessboard.FigureNotFoundException: На позиции нет фигуры"));
+        testBoard.move(source, destination);
     }
 }

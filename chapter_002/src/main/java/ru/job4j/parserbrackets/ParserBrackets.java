@@ -43,7 +43,7 @@ public class ParserBrackets {
     }
 
     /**
-     * Method isClosedBrackets - проверяет, является ли символ закрывающей скобкой
+     * Method isClosingBrackets - проверяет, является ли символ закрывающей скобкой
      * @param symbol
      * @return
      */

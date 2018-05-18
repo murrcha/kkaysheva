@@ -35,18 +35,12 @@ public class BishopTest {
     /**
      * Test invalid way
      */
-    @Test
+    @Test(expected = ImpossibleMoveException.class)
     public void whenInvalidWayThenReturnImpossibleWayException() {
         Cell position = new Cell(6, 1);
         Bishop testBishop = new Bishop(position);
         Cell destination = new Cell(5, 6);
-        String error = "";
-        try {
-            testBishop.way(position, destination);
-        } catch (ImpossibleMoveException ime) {
-            error = ime.toString();
-        }
-        assertThat(error, is("ru.job4j.chessboard.ImpossibleMoveException: Движение фигуры по заданному пути невозможно"));
+        testBishop.way(position, destination);
     }
 
     /**

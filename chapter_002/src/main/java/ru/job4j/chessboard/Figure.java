@@ -38,4 +38,13 @@ public abstract class Figure {
      * @return объект Figure
      */
     abstract Figure copy(Cell destination);
+
+    /**
+     * Method isOccupied - проверяет занимает ли фигура передаваемую позицию
+     * @param position позиция
+     * @return результат
+     */
+    public boolean isOccupied(Cell position) {
+        return (this.position.getX() == position.getX() && this.position.getY() == position.getY());
+    }
 }
