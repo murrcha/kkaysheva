@@ -55,4 +55,26 @@ public class BishopTest {
         assertThat(testBishop.copy(destination).position.getX(), is(2));
         assertThat(testBishop.copy(destination).position.getY(), is(2));
     }
+
+    /**
+     * Test isOccupied
+     */
+    @Test
+    public void whenFigureIsOccupiedThenReturnTrue() {
+        Cell position = new Cell(1, 1);
+        Cell checkPosition = new Cell(1, 1);
+        Bishop testBishop = new Bishop(position);
+        assertThat(testBishop.isOccupied(checkPosition), is(true));
+    }
+
+    /**
+     * Test isOccupied
+     */
+    @Test
+    public void whenFigureNotIsOccupiedThenReturnFalse() {
+        Cell position = new Cell(1, 1);
+        Cell checkPosition = new Cell(2, 2);
+        Bishop testBishop = new Bishop(position);
+        assertThat(testBishop.isOccupied(checkPosition), is(false));
+    }
 }
