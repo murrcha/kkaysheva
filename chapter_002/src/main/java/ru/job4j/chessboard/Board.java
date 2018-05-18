@@ -55,7 +55,6 @@ public class Board {
             }
         }
         for (int index = 0; index < this.figures.length; index++) {
-            //if (figure.position.getX() == source.getX() && figure.position.getY() == source.getY()) {
             if (figure.isOccupied(source)) {
                 this.figures[index] = figure.copy(destination);
                 result = true;
@@ -72,7 +71,6 @@ public class Board {
     public Figure findFigureByCell(Cell position) {
         Figure result = null;
         for (Figure figure : this.figures) {
-            //if (figure != null && figure.position.getX() == position.getX() && figure.position.getY() == position.getY()) {
             if (figure != null && figure.isOccupied(position)) {
                 result = figure;
                 break;
