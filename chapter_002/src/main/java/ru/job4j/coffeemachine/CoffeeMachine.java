@@ -32,7 +32,7 @@ public class CoffeeMachine {
             int coin;
             do {
                 change = Arrays.copyOf(change, count + 1);
-                coin = this.getCoins(difference);
+                coin = this.getCoin(difference);
                 change[count] = coin;
                 count++;
                 difference = difference - coin;
@@ -42,11 +42,11 @@ public class CoffeeMachine {
     }
 
     /**
-     * Method getCoins - получает наибольший номинал монеты исходя из разницы
+     * Method getCoin - получает наибольший номинал монеты исходя из разницы
      * @param difference разница
      * @return номинал монеты
      */
-    private int getCoins(int difference) {
+    private int getCoin(int difference) {
         int result = 0;
         for (int index = 0; index < COINS.length; index++) {
             if (difference == COINS[index]) {
