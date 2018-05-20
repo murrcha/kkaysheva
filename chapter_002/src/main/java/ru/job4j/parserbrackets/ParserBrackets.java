@@ -35,8 +35,8 @@ public class ParserBrackets {
 
     /**
      * Method isOpeningBracket - проверяет, является ли символ открывающей скобкой
-     * @param symbol
-     * @return
+     * @param symbol символ
+     * @return результат
      */
     private boolean isOpeningBracket(char symbol) {
         return (symbol == SQUARE_BRACKETS[0] || symbol == FIGURE_BRACKETS[0] || symbol == ROUND_BRACKETS[0]);
@@ -44,8 +44,8 @@ public class ParserBrackets {
 
     /**
      * Method isClosingBrackets - проверяет, является ли символ закрывающей скобкой
-     * @param symbol
-     * @return
+     * @param symbol символ
+     * @return результат
      */
     private boolean isClosingBracket(char symbol) {
         return (symbol == SQUARE_BRACKETS[1] || symbol == FIGURE_BRACKETS[1] || symbol == ROUND_BRACKETS[1]);
@@ -62,13 +62,13 @@ public class ParserBrackets {
         boolean balanced = true;
         for (int index = 0; index < input.length(); index++) {
             char symbol = input.charAt(index);
-            if (isOpeningBracket(symbol)) {
+            if (this.isOpeningBracket(symbol)) {
                 stackBrackets.push(symbol);
-            } else if (isClosingBracket(symbol)) {
+            } else if (this.isClosingBracket(symbol)) {
                 if (stackBrackets.empty()) {
                     balanced = false;
                     break;
-                } else if (isPair(stackBrackets.peek(), symbol)) {
+                } else if (this.isPair(stackBrackets.peek(), symbol)) {
                             stackBrackets.pop();
                 } else {
                     balanced = false;
@@ -89,17 +89,17 @@ public class ParserBrackets {
      */
     public String[] parseString(String input) {
         String[] brackets = null;
-        if (validateString(input) && input.length() != 0) {
+        if (this.validateString(input) && input.length() != 0) {
             Stack<Character> stackBrackets = new Stack<>();
             Stack<Integer> stackPosition = new Stack<>();
             brackets = new String[input.length() / 2];
             int count = 0;
             for (int index = 0; index < input.length(); index++) {
                 char symbol = input.charAt(index);
-                if (isOpeningBracket(symbol)) {
+                if (this.isOpeningBracket(symbol)) {
                     stackBrackets.push(symbol);
                     stackPosition.push(index);
-                } else if (isClosingBracket(symbol)) {
+                } else if (this.isClosingBracket(symbol)) {
                     brackets[count] = String.format("%s%s, %s%s", stackBrackets.peek(), stackPosition.peek(), index, symbol);
                     stackBrackets.pop();
                     stackPosition.pop();
