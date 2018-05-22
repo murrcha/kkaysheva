@@ -32,11 +32,11 @@ public class Bishop extends Figure {
             throw new ImpossibleMoveException("Движение фигуры по заданному пути невозможно");
         }
         Cell[] cells = new Cell[abs(destination.getX() - source.getX())];
-        int x;
-        int y;
+        int resultX = Integer.compare(destination.getX(), source.getX());
+        int resultY = Integer.compare(destination.getY(), source.getY());
         for (int index = 0; index < cells.length; index++) {
-            x = (destination.getX() > source.getX()) ? source.getX() + index + 1 : source.getX() - index - 1;
-            y = (destination.getY() > source.getY()) ? source.getY() + index + 1 : source.getY() - index - 1;
+            int x = source.getX() + resultX * (index + 1);
+            int y = source.getY() + resultY * (index + 1);
             cells[index] = new Cell(x, y);
         }
         return cells;
