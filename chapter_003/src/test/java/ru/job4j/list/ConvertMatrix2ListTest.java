@@ -25,7 +25,7 @@ public class ConvertMatrix2ListTest {
     @Test
     public void whenInputMatrix2x2ThenReturnListWithSize4() {
         ConvertMatrix2List converter = new ConvertMatrix2List();
-        int[][] input = { {1, 2}, {3, 4} };
+        int[][] input = {{1, 2}, {3, 4}};
         List<Integer> expected = Arrays.asList(1, 2, 3, 4);
         List<Integer> result = converter.toList(input);
         assertThat(result, is(expected));
