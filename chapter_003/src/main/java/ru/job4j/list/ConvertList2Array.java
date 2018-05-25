@@ -1,5 +1,6 @@
 package ru.job4j.list;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,5 +33,21 @@ public class ConvertList2Array {
             }
         }
         return array;
+    }
+
+    /**
+     * Method convert - конвертирует список массивов в список
+     * @param list список массивов
+     * @return список
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        Iterator<int[]> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            for (int value : iterator.next()) {
+                result.add(value);
+            }
+        }
+        return result;
     }
 }
