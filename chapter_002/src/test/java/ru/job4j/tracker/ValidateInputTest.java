@@ -49,7 +49,7 @@ public class ValidateInputTest {
      * Test ask
      */
     @Test
-    public void whenInvalidFormatInputThenNumberFormatExeption() {
+    public void whenInvalidFormatInputThenNumberFormatException() {
         ValidateInput testInput = new ValidateInput(
                 new StubInput(new String[] {"invalid", "1"})
         );

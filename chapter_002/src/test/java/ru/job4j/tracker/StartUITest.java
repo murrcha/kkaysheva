@@ -88,7 +88,7 @@ public class StartUITest {
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         testInput = new StubInput(new String[] {"0", "name1", "desc1", "6"});
         new StartUI(testInput, testTracker).init();
-        String testId = testTracker.findByName("name1")[0].getId();
+        String testId = testTracker.findByName("name1").get(0).getId();
         assertThat(new String(out.toByteArray()),
                 is(
                         new StringBuilder()
