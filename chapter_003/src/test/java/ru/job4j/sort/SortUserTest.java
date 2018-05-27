@@ -32,4 +32,41 @@ public class SortUserTest {
         assertThat(result.toString(), is(
                 "[User: Sam, 15, User: Dan, 20, User: Sam, 20, User: Kat, 25, User: Ann, 30]"));
     }
+
+    /**
+     * Test sortNameLength
+     */
+    @Test
+    public void whenSortByNameLengthThenReturnSortedList() {
+        SortUser sorter = new SortUser();
+        List<User> users = Arrays.asList(
+                new User("Katerina", 25),
+                new User("Anna", 30),
+                new User("Daniel", 20),
+                new User("Sam", 20),
+                new User("Otto", 15)
+        );
+        List<User> result = sorter.sortNameLength(users);
+        assertThat(result.toString(), is(
+                "[User: Sam, 20, User: Anna, 30, User: Otto, 15, User: Daniel, 20, User: Katerina, 25]"));
+    }
+
+    /**
+     * Test sortByAllFields
+     */
+    @Test
+    public void whenSortByAllFieldsThenReturnSortedList() {
+        SortUser sorter = new SortUser();
+        List<User> users = Arrays.asList(
+                new User("Kat", 25),
+                new User("Ann", 30),
+                new User("Dan", 20),
+                new User("Sam", 20),
+                new User("Sam", 15),
+                new User("Kat", 35)
+        );
+        List<User> result = sorter.sortByAllFields(users);
+        assertThat(result.toString(), is(
+                "[User: Ann, 30, User: Dan, 20, User: Kat, 25, User: Kat, 35, User: Sam, 15, User: Sam, 20]"));
+    }
 }
