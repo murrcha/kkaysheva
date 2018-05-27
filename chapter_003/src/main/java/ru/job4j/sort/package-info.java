@@ -1,8 +1,8 @@
 /**
- * Package for list tasks.
+ * Package for sort tasks.
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
  * @since 0.1
  */
-package ru.job4j.list;
+package ru.job4j.sort;
