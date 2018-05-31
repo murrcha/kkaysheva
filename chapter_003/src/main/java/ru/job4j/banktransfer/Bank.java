@@ -46,6 +46,7 @@ public class Bank {
         for (User user : users) {
             if (user.getPassport().equals(passport)) {
                 this.usersAccounts.get(user).add(account);
+                break;
             }
         }
     }
@@ -60,6 +61,7 @@ public class Bank {
         for (User user : users) {
             if (user.getPassport().equals(passport)) {
                 this.usersAccounts.get(user).remove(account);
+                break;
             }
         }
     }
@@ -100,6 +102,7 @@ public class Bank {
         for (Account account : accounts) {
             if (account.getRequisites().equals(requisite)) {
                 result = account;
+                break;
             }
         }
         return result;
