@@ -21,8 +21,10 @@ public class ListCompare implements Comparator<String> {
         int result = 0;
         int minLength = min(left.length(), right.length());
         for (int index = 0; index < minLength; index++) {
-            if (left.charAt(index) != right.charAt(index)) {
-                result = Character.compare(left.charAt(index), right.charAt(index));
+            char leftSymbol = left.charAt(index);
+            char rightSymbol = right.charAt(index);
+            if (leftSymbol != rightSymbol) {
+                result = Character.compare(leftSymbol, rightSymbol);
                 break;
             }
         }
