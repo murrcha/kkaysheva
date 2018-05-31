@@ -44,6 +44,7 @@ public class Tracker {
             if (this.items.get(index).getId().equals(id)) {
                 this.items.get(index).setName(item.getName());
                 this.items.get(index).setDescription(item.getDescription());
+                break;
             }
         }
     }
@@ -56,6 +57,7 @@ public class Tracker {
         for (int index = 0; index < this.items.size(); index++) {
             if (this.items.get(index).getId().equals(id)) {
                 items.remove(index);
+                break;
             }
         }
     }
