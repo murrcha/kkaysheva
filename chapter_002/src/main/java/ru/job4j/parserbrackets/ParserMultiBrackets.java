@@ -11,8 +11,15 @@ import java.util.Stack;
  */
 public class ParserMultiBrackets {
 
+    /**
+     * Скобки
+     */
     private final Brackets brackets;
 
+    /**
+     * Конструктор с инициализацией скобок
+     * @param brackets
+     */
     public ParserMultiBrackets(Brackets brackets) {
         this.brackets = brackets;
     }
@@ -27,31 +34,30 @@ public class ParserMultiBrackets {
         boolean result = false;
         Stack<String> stackBrackets = new Stack<>();
         String subString;
-        int index = 0;
         boolean balanced = true;
-        do {
-            if (input.contains(brackets.getOpeningBracket())) {
-                index = input.indexOf(brackets.getOpeningBracket());
-                subString = input.substring(index, index + brackets.getOpeningBracket().length());
+        for (int index = 0; index < input.length() - brackets.getOpeningBracket().length(); index++) {
+            subString = input.substring(index, index + brackets.getOpeningBracket().length());
+            if (brackets.isOpeningBracket(subString)) {
                 stackBrackets.push(subString);
-                input = input.substring(index + subString.length());
-            } else if (input.contains(brackets.getClosingBracket())) {
-                if (stackBrackets.empty()) {
-                    balanced = false;
-                    break;
-                } else {
-                    index = input.indexOf(brackets.getClosingBracket());
-                    subString = input.substring(index, index + brackets.getClosingBracket().length());
-                    input = input.substring(index + subString.length());
-                    if (brackets.isPair(stackBrackets.peek(), subString)) {
-                        stackBrackets.pop();
-                    } else {
+                continue;
+            } else {
+                subString = input.substring(index, index + brackets.getClosingBracket().length());
+                if (brackets.isClosingBracket(subString)) {
+                    if (stackBrackets.empty()) {
                         balanced = false;
                         break;
+                    } else {
+                        if (brackets.isPair(stackBrackets.peek(), subString)) {
+                            stackBrackets.pop();
+                            continue;
+                        } else {
+                            balanced = false;
+                            break;
+                        }
                     }
                 }
             }
-        } while (input.contains(brackets.getOpeningBracket()) || input.contains(brackets.getClosingBracket()));
+        }
         if (balanced && stackBrackets.empty()) {
             result = true;
         }
@@ -71,28 +77,28 @@ public class ParserMultiBrackets {
             Stack<Integer> stackPosition = new Stack<>();
             bracketsArray = new String[input.length() / 2];
             int count = 0;
-            int index;
             String subString;
-            do {
-                if (input.contains(brackets.getOpeningBracket())) {
-                    index = input.indexOf(brackets.getOpeningBracket());
-                    subString = input.substring(index, index + brackets.getOpeningBracket().length());
+            for (int index = 0; index < input.length() - brackets.getOpeningBracket().length(); index++) {
+                subString = input.substring(index, index + brackets.getOpeningBracket().length());
+                if (brackets.isOpeningBracket(subString)) {
                     stackBrackets.push(subString);
                     stackPosition.push(index);
-                    input = input.substring(index + subString.length());
-                } else if (input.contains(brackets.getClosingBracket())) {
-                    index = input.indexOf(brackets.getClosingBracket());
+                    continue;
+                } else {
                     subString = input.substring(index, index + brackets.getClosingBracket().length());
-                    input = input.substring(index + subString.length());
-                    bracketsArray[count] = String.format("%s%s, %s%s", stackBrackets.peek(), stackPosition.peek(), index, subString);
-                    stackBrackets.pop();
-                    stackPosition.pop();
-                    count++;
+                    if (brackets.isClosingBracket(subString)) {
+                        bracketsArray[count] =
+                                String.format("%s%s, %s%s", stackBrackets.peek(),
+                                        stackPosition.peek(), index, subString);
+                        stackBrackets.pop();
+                        stackPosition.pop();
+                        count++;
+                    }
                 }
-            } while (input.contains(brackets.getOpeningBracket()) || input.contains(brackets.getClosingBracket()));
-            if (bracketsArray.length == 0) {
-                bracketsArray = null;
             }
+        }
+        if (bracketsArray != null && bracketsArray.length == 0) {
+            bracketsArray = null;
         }
         return bracketsArray;
     }

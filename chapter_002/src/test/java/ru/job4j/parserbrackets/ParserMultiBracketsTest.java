@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 /**
  * ParserMultiBrackets Test
@@ -15,34 +16,52 @@ import static org.hamcrest.Matchers.is;
 public class ParserMultiBracketsTest {
 
     /**
-     * Test validate
+     * Test validateBrackets
      */
     @Test
     public void whenValidInputValidateThenReturnTrue() {
-        Brackets brackets = new Brackets("<h>", "</h>");
-        ParserMultiBrackets parserBrackets = new ParserMultiBrackets(brackets);
-        String input = "text<h>text</h>text";
+        ParserMultiBrackets parserBrackets = new ParserMultiBrackets(
+                new Brackets("<tag>", "</tag>")
+        );
+        String input = "text<tag>text<tag>text</tag>text</tag>text";
         assertThat(parserBrackets.validateBrackets(input), is(true));
     }
 
     /**
-     * Test validate
+     * Test validateBrackets
      */
     @Test
     public void whenInvalidInputValidateThenReturnFalse() {
-        Brackets brackets = new Brackets("<h>", "</h>");
-        ParserMultiBrackets parserBrackets = new ParserMultiBrackets(brackets);
-        String input = "text<h>text</h>t</h>";
+        ParserMultiBrackets parserBrackets = new ParserMultiBrackets(
+                new Brackets("<h>", "</h>")
+        );
+        String input = "</h>text<h>text</h>";
         assertThat(parserBrackets.validateBrackets(input), is(false));
     }
 
+    /**
+     * Test parseBrackets
+     */
     @Test
-    public void whenParseInputThenReturnStringArray() {
-        /*Brackets brackets = new Brackets("<h>", "</h>");
+    public void whenParseValidInputThenReturnStringArray() {
+        Brackets brackets = new Brackets("<h>", "</h>");
         ParserMultiBrackets parserBrackets = new ParserMultiBrackets(brackets);
-        String input = "<h>text<h></h></h>";
+        String input = "tag<h>tag<h>test</h>tag</h>tag";
         String[] result = parserBrackets.parseBrackets(input);
-        assertThat(result[0], is("<h>7, 10</h>"));
-        assertThat(result[1], is("<h>0, 13</h>"));*/
+        assertThat(result[0], is("<h>9, 16</h>"));
+        assertThat(result[1], is("<h>3, 23</h>"));
+    }
+
+    /**
+     * Test parseBrackets
+     */
+    @Test
+    public void whenParseInvalidInputThenReturnNull() {
+        Brackets brackets = new Brackets("<h>", "</h>");
+        ParserMultiBrackets parserBrackets = new ParserMultiBrackets(brackets);
+        String invalidInput = "</h>text<h></h></h>";
+        String emptyInput = "m";
+        assertThat(parserBrackets.parseBrackets(invalidInput), nullValue());
+        assertThat(parserBrackets.parseBrackets(emptyInput), nullValue());
     }
 }
