@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
-public class EvenNumbersIterator implements Iterator {
+public class EvenNumbersIterator implements Iterator<Integer> {
 
     /**
      * Значения для перебора
@@ -18,9 +18,9 @@ public class EvenNumbersIterator implements Iterator {
     private final int[] values;
 
     /**
-     * Индекс позиции каретки
+     * Позиция каретки
      */
-    private int indexPosition = 0;
+    private int position = 0;
 
     /**
      * Конструктор принимающий значения для перебора
@@ -31,29 +31,41 @@ public class EvenNumbersIterator implements Iterator {
     }
 
     /**
-     * ${@inheritDoc}
+     * Method isEven - проверят число на четность
+     * @param digit
+     * @return
      */
-    @Override
-    public boolean hasNext() {
-        boolean result = false;
-        for (int index = indexPosition; index < values.length; index++) {
-            if (values[index] % 2 == 0) {
-                result = true;
-                break;
-            }
-        }
-        return values.length > indexPosition && result;
+    private boolean isEven(int digit) {
+        return digit % 2 == 0;
     }
 
     /**
      * ${@inheritDoc}
      */
     @Override
-    public Object next() throws NoSuchElementException {
+    public boolean hasNext() {
+        boolean result = false;
+        for (int index = position; index < values.length; index++) {
+            if (isEven(values[index])) {
+                result = true;
+                break;
+            }
+        }
+        return values.length > position && result;
+    }
+
+    /**
+     * ${@inheritDoc}
+     */
+    @Override
+    public Integer next() {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        int result = values[indexPosition++];
-        return result % 2 == 0 ? result : this.next();
+        int result = values[position++];
+        if (!isEven(result)) {
+            result = this.next();
+        }
+        return result;
     }
 }

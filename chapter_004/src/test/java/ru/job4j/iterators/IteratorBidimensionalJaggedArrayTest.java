@@ -15,7 +15,7 @@ import java.util.Iterator;
  * @version $Id$
  * @since 0.1
  */
-public class IteratorBidemensionalJaggedArrayTest {
+public class IteratorBidimensionalJaggedArrayTest {
 
     private Iterator<Integer> it;
 
