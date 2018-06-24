@@ -46,7 +46,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     public boolean hasNext() {
         boolean result = false;
         for (int index = position; index < values.length; index++) {
-            if (isEven(values[index])) {
+            if (this.isEven(values[index])) {
                 result = true;
                 break;
             }
@@ -63,7 +63,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
             throw new NoSuchElementException();
         }
         int result = values[position++];
-        if (!isEven(result)) {
+        if (!this.isEven(result)) {
             result = this.next();
         }
         return result;

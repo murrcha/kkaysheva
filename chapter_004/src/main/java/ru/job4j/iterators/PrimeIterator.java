@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
-public class PrimeIterator implements Iterator {
+public class PrimeIterator implements Iterator<Integer> {
 
     /**
      * Массив чисел для перебора
@@ -20,7 +20,7 @@ public class PrimeIterator implements Iterator {
     /**
      * Индекс позиции каретки
      */
-    private int indexPosition = 0;
+    private int position = 0;
 
     /**
      * Конструктор принимающий числа
@@ -36,24 +36,24 @@ public class PrimeIterator implements Iterator {
     @Override
     public boolean hasNext() {
         boolean result = false;
-        for (int index = this.indexPosition; index < this.values.length; index++) {
+        for (int index = this.position; index < this.values.length; index++) {
             if (this.isPrimeDigit(this.values[index])) {
                 result = true;
                 break;
             }
         }
-        return this.values.length > this.indexPosition && result;
+        return this.values.length > this.position && result;
     }
 
     /**
      * ${@inheritDoc}
      */
     @Override
-    public Object next() {
+    public Integer next() {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        int result = this.values[this.indexPosition++];
+        int result = this.values[this.position++];
         return this.isPrimeDigit(result) ? result : this.next();
     }
 

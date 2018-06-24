@@ -39,7 +39,7 @@ public class Converter {
                     throw new NoSuchElementException();
                 }
                 int result = iterator.next();
-                if (!iterator.hasNext() && it.hasNext()) {
+                while (!iterator.hasNext() && it.hasNext()) {
                     iterator = it.next();
                 }
                 return result;
