@@ -20,8 +20,8 @@ public class IteratorBidimensionalArray implements Iterator {
     /**
      * Индексы строк и элементов в строке
      */
-    private int indexRows = 0;
-    private int indexColumns = 0;
+    private int row = 0;
+    private int column = 0;
 
     /**
      * Конструктор принимающий значения для возврата
@@ -36,7 +36,7 @@ public class IteratorBidimensionalArray implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        return values.length > indexRows && values[indexRows].length > indexColumns;
+        return values.length > row && values[row].length > column;
     }
 
     /**
@@ -48,11 +48,11 @@ public class IteratorBidimensionalArray implements Iterator {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        int result = values[indexRows][indexColumns];
-        indexColumns++;
-        if (indexColumns == values[indexRows].length) {
-            indexRows++;
-            indexColumns = 0;
+        int result = values[row][column];
+        column++;
+        if (column == values[row].length) {
+            row++;
+            column = 0;
         }
         return result;
     }
