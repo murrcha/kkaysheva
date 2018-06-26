@@ -23,15 +23,17 @@ public class SimpleArrayTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void whenCreateSimpleArrayWith0SizeThenReturnEmptyArray() {
         SimpleArray<String> testArray = new SimpleArray<>(0);
+        assertThat(testArray.getSize(), is(0));
         testArray.add("test");
     }
 
     /**
      * Test create SimpleArray
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void whenCreateSimpleArrayWithInvalidSizeThenReturnException() {
-        new SimpleArray<Integer>(-1);
+    @Test
+    public void whenCreateSimpleArrayWithInvalidSizeThenSetDefaultSize10() {
+        SimpleArray<Integer> testArray = new SimpleArray<Integer>(-1);
+        assertThat(testArray.getSize(), is(10));
     }
 
     /**

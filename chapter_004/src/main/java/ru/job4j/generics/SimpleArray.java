@@ -14,6 +14,11 @@ import java.util.NoSuchElementException;
 public class SimpleArray<T> implements Iterable<T> {
 
     /**
+     * Размер массива по умолчанию
+     */
+    private static final int DEFAULT_SIZE = 10;
+
+    /**
      * Текущая позиция в массиве
      */
     private int position = 0;
@@ -33,12 +38,28 @@ public class SimpleArray<T> implements Iterable<T> {
         } else if (size == 0) {
             this.elements = new Object[] {};
         } else {
-            throw new IllegalArgumentException(String.format("Illegal size: %s", size));
+            this.elements = new Object[DEFAULT_SIZE];
         }
     }
 
     /**
-     * Method checkIndex - проверяет входит ли индекс в заданный диапазон (0..size-1)
+     * Method getPosition
+     * @return текущую позицию в массиве
+     */
+    public int getPosition() {
+        return this.position;
+    }
+
+    /**
+     * Method getPosition
+     * @return размер массива
+     */
+    public int getSize() {
+        return this.elements.length;
+    }
+
+    /**
+     * Method checkIndex - проверяет входит ли индекс в заданный диапазон (0..getPosition-1)
      * @param index
      */
     private void checkIndex(int index) {
