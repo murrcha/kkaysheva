@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.is;
  * @version $Id$
  * @since 0.1
  */
+@SuppressWarnings("unchecked")
 public class IteratorBidimensionalMatrixArrayTest {
 
     private Iterator<Integer> it;

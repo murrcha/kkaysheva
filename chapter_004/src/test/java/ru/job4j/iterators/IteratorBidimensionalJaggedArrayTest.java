@@ -15,6 +15,7 @@ import java.util.Iterator;
  * @version $Id$
  * @since 0.1
  */
+@SuppressWarnings("unchecked")
 public class IteratorBidimensionalJaggedArrayTest {
 
     private Iterator<Integer> it;
