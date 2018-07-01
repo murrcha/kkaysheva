@@ -48,7 +48,7 @@ public class SimpleArrayList<E> implements Iterable<E> {
     public SimpleArrayList(int size) {
         if (size > 0) {
             container = new Object[size];
-        } else if (size <= 0) {
+        } else {
             container = new Object[DEFAULT_SIZE];
         }
     }
