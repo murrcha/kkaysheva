@@ -56,6 +56,7 @@ public class SimpleList<E> {
      * @return элемент
      */
     public E get(int index) {
+        checkIndex(index);
         Node<E> result = this.first;
         for (int i = 0; i < index; i++) {
             result = result.next;
@@ -69,6 +70,16 @@ public class SimpleList<E> {
      */
     public int getSize() {
         return this.size;
+    }
+
+    /**
+     * Method checkIndex
+     * @param index
+     */
+    private void checkIndex(int index) {
+        if (index >= this.size || index < 0) {
+            throw new IndexOutOfBoundsException(String.format("Index: %s", index));
+        }
     }
 
     /**

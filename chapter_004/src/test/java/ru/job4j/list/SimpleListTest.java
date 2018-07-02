@@ -31,8 +31,16 @@ public class SimpleListTest {
      * Test get
      */
     @Test
-    public void whenAddThreeElementsThenUseGetOneResultTwo() {
+    public void whenAddThreeElementsThenUseGetOneResultThree() {
         assertThat(list.get(0), is(3));
+    }
+
+    /**
+     * Test get
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenGetByInvalidIndexThenReturnException() {
+        list.get(3);
     }
 
     /**
