@@ -29,6 +29,11 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     private Node<E> first;
 
     /**
+     * Ссылка на последний элемент
+     */
+    private Node<E> last;
+
+    /**
      * Method checkIndex - проверяет вхождение индекса в границы размера списка
      * @param index
      */
@@ -43,11 +48,22 @@ public class SimpleLinkedList<E> implements Iterable<E> {
      * @param data
      */
     public void add(E data) {
-        Node<E> newNode = new Node<>(data);
+        final Node<E> last = this.last;
+        final Node<E> newNode = new Node<>(last, data, null);
+        this.last = newNode;
+        if (last == null) {
+            this.first = newNode;
+        } else {
+            last.next = newNode;
+        }
+        this.size++;
+        this.modCount++;
+
+        /*Node<E> newNode = new Node<>(data);
         newNode.next = this.first;
         this.first = newNode;
         this.size++;
-        this.modCount++;
+        this.modCount++;*/
     }
 
     /**
@@ -62,6 +78,54 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             result = result.next;
         }
         return result.data;
+    }
+
+    /**
+     * Method deleteFirst - удаляет первый элемент из списка и возвращает его значение
+     * @return
+     */
+    public E deleteFirst() {
+        final Node<E> first = this.first;
+        if (first == null) {
+            throw new NoSuchElementException();
+        }
+        final E data = first.data;
+        final Node<E> next = first.next;
+        first.data = null;
+        first.next = null;
+        this.first = next;
+        if (next == null) {
+            this.last = null;
+        } else {
+            next.prev = null;
+        }
+        this.size--;
+        this.modCount++;
+        return data;
+    }
+
+    /**
+     * Method deleteLast - удаляет последний элемент из списка и возвращает его
+     * @return
+     */
+    public E deleteLast() {
+        final Node<E> last = this.last;
+        if (last == null) {
+            throw new NoSuchElementException();
+        }
+        final E data = last.data;
+        final Node<E> prev = last.prev;
+        last.data = null;
+        last.prev = null;
+        this.last = prev;
+        if (prev == null) {
+            this.first = null;
+        } else {
+            prev.next = null;
+        }
+        this.size--;
+        this.modCount++;
+        return data;
     }
 
     /**
@@ -101,8 +165,11 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     private static class Node<E> {
         E data;
         Node<E> next;
-        public Node(E data) {
+        Node<E> prev;
+        public Node(Node<E> prev, E data, Node<E> next) {
+            this.prev = prev;
             this.data = data;
+            this.next = next;
         }
     }
 }

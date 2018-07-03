@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -33,9 +34,9 @@ public class SimpleLinkedListTest {
      */
     @Test
     public void whenGetElementsByIndexThenReturnValue() {
-        assertThat(container.get(0), is(8));
+        assertThat(container.get(0), is(3));
         assertThat(container.get(1), is(5));
-        assertThat(container.get(2), is(3));
+        assertThat(container.get(2), is(8));
     }
 
     /**
@@ -54,11 +55,11 @@ public class SimpleLinkedListTest {
         Iterator<Integer> it = container.iterator();
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(8));
+        assertThat(it.next(), is(3));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(5));
         assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is(3));
+        assertThat(it.next(), is(8));
         assertThat(it.hasNext(), is(false));
     }
 
@@ -72,4 +73,43 @@ public class SimpleLinkedListTest {
         it.next();
     }
 
+    /**
+     * Test deleteFirst
+     */
+    @Test
+    public void whenDeleteFirstElementThenReturnDeletedElement() {
+        assertThat(container.deleteFirst(), is(3));
+        assertThat(container.get(0), is(5));
+        assertThat(container.get(1), is(8));
+    }
+
+    /**
+     * Test deleteLast
+     */
+    @Test
+    public void whenDeleteLastElementThenReturnDeletedElement() {
+        assertThat(container.deleteLast(), is(8));
+        assertThat(container.get(0), is(3));
+        assertThat(container.get(1), is(5));
+    }
+
+    /**
+     * Test deleteFirst
+     */
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteFistElementInEmptyListThenReturnException() {
+        for (int i = 0; i != 4; i++) {
+            container.deleteFirst();
+        }
+    }
+
+    /**
+     * Test deleteLast
+     */
+    @Test(expected = NoSuchElementException.class)
+    public void whenDeleteLastElementInEmptyListThenReturnException() {
+        for (int i = 0; i != 4; i++) {
+            container.deleteLast();
+        }
+    }
 }
