@@ -1,8 +1,9 @@
 [![Build Status](https://travis-ci.org/murrcha/kkaysheva.svg?branch=master)](https://travis-ci.org/murrcha/kkaysheva)
 [![codecov](https://codecov.io/gh/murrcha/kkaysheva/branch/master/graph/badge.svg)](https://codecov.io/gh/murrcha/kkaysheva)
 
-# Репозиторий Ксении Кайшевой
+# РЈС‡РµР±РЅС‹Р№ РїСЂРѕРµРєС‚ РїРѕ РєСѓСЂСЃСѓ Java РѕС‚ Job4j
 
-Я прохожу обучение по курсу Job4j (начало обучения: март, 2018 год)
-
-Здесь находятся проекты, реализуемые мной в процессе обучения.
+* chapter_001 - Р‘Р°Р·РѕРІС‹Р№ СЃРёРЅС‚Р°РєСЃРёСЃ
+* chapter_002 - РћРћРџ
+* chapter_003 - Collections. Lite
+* chapter_004 - Collections. Pro
