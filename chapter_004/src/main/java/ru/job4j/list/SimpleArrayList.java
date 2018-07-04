@@ -82,6 +82,14 @@ public class SimpleArrayList<E> implements Iterable<E> {
     }
 
     /**
+     * Method getPosition
+     * @return
+     */
+    public int getPosition() {
+        return this.position;
+    }
+
+    /**
      * Method add - добавляет новый элемент
      * @param value
      */
