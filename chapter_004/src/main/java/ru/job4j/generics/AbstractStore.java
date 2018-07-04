@@ -7,7 +7,7 @@ package ru.job4j.generics;
  * @version $Id$
  * @since 0.1
  */
-public abstract class AbstractStore<T extends Base> {
+public abstract class AbstractStore<T extends Base> implements Store<T> {
 
     /**
      * Массив элементов
@@ -25,6 +25,7 @@ public abstract class AbstractStore<T extends Base> {
     /**
      * ${@inheritDoc}
      */
+    @Override
     public void add(T model) {
         this.elements.add(model);
     }
@@ -32,6 +33,7 @@ public abstract class AbstractStore<T extends Base> {
     /**
      * ${@inheritDoc}
      */
+    @Override
     public boolean replace(String id, T model) {
         boolean result = false;
         for (int index = 0; index < this.elements.getPosition(); index++) {
@@ -48,6 +50,7 @@ public abstract class AbstractStore<T extends Base> {
     /**
      * ${@inheritDoc}
      */
+    @Override
     public boolean delete(String id) {
         boolean result = false;
         for (int index = 0; index < this.elements.getPosition(); index++) {
@@ -63,6 +66,7 @@ public abstract class AbstractStore<T extends Base> {
     /**
      * ${@inheritDoc}
      */
+    @Override
     public T findById(String id) {
         T result = null;
         for (int index = 0; index < this.elements.getPosition(); index++) {
