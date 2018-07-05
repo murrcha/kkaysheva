@@ -58,12 +58,6 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         }
         this.size++;
         this.modCount++;
-
-        /*Node<E> newNode = new Node<>(data);
-        newNode.next = this.first;
-        this.first = newNode;
-        this.size++;
-        this.modCount++;*/
     }
 
     /**

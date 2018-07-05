@@ -47,7 +47,6 @@ public class SimpleListSet<E> implements Iterable<E> {
             this.set.add(value);
             this.modCount++;
         }
-
     }
 
     /**
