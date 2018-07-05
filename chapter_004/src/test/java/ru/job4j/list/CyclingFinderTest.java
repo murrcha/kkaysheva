@@ -13,6 +13,7 @@ import static org.junit.Assert.assertThat;
  * @version $Id$
  * @since 0.1
  */
+@SuppressWarnings("unchecked")
 public class CyclingFinderTest {
 
     private Node first;

@@ -129,6 +129,14 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     }
 
     /**
+     * Method getSize
+     * @return
+     */
+    public int getSize() {
+        return this.size;
+    }
+
+    /**
      * ${@inheritDoc}
      */
     @Override
