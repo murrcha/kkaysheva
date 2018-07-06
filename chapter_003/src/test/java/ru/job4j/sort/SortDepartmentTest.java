@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
  * @version $Id$
  * @since 0.1
  */
-public class SorterTest {
+public class SortDepartmentTest {
 
     /**
      * Test input
@@ -43,6 +43,26 @@ public class SorterTest {
                 "K2\\SK1",
                 "K2\\SK1\\SSK1",
                 "K2\\SK1\\SSK2"
+        }));
+    }
+
+    /**
+     * Test sortDescending
+     */
+    @Test
+    public void whenSortDescendingThenReturnSortedArray() {
+        SortDepartment sorter = new SortDepartment();
+        String[] result = sorter.sortDescending(INPUT);
+        assertThat(result, is(new String[] {
+                "K2",
+                "K2\\SK1",
+                "K2\\SK1\\SSK2",
+                "K2\\SK1\\SSK1",
+                "K1",
+                "K1\\SK2",
+                "K1\\SK1",
+                "K1\\SK1\\SSK2",
+                "K1\\SK1\\SSK1"
         }));
     }
 }
