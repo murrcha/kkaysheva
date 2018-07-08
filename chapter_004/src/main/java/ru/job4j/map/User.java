@@ -52,11 +52,19 @@ public class User {
      * ${@inheritDoc}
      */
     @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User u = (User) obj;
+        return u.name.equals(name) && u.birthday.equals(birthday);
+    }
+
+    @Override
     public int hashCode() {
-        /*int result = 13;
-        result = 31 * result + Objects.hashCode(name);
-        result = 31 * result + Objects.hashCode(birthday);
-        return result;*/
-        return Objects.hash(name, birthday);
+        return super.hashCode();
     }
 }

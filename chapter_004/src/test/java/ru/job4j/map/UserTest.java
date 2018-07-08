@@ -31,7 +31,7 @@ public class UserTest {
         map.put(userOne, new Object());
         map.put(userTwo, new Object());
         assertThat(map.size(), is(2));
-        assertThat(userOne.hashCode() == userTwo.hashCode(), is(true));
-        assertThat(userOne.equals(userTwo), is(false));
+        assertThat(userOne.hashCode() == userTwo.hashCode(), is(false));
+        assertThat(userOne.equals(userTwo), is(true));
     }
 }
