@@ -63,8 +63,15 @@ public class User {
         return u.name.equals(name) && u.birthday.equals(birthday);
     }
 
+    /**
+     * ${@inheritDoc}
+     */
     @Override
     public int hashCode() {
-        return super.hashCode();
+        /*int result = 13;
+        result = 31 * result + Objects.hash(name);
+        result = 31 * result + Objects.hash(birthday);
+        return result;*/
+        return Objects.hash(name, birthday);
     }
 }
