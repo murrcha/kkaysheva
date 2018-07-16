@@ -45,10 +45,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean result = false;
-        Optional<Node<E>> nodeP = findBy(parent);
-        Optional<Node<E>> nodeCh = findBy(child);
-        if (nodeP.isPresent() && !nodeCh.isPresent()) {
-            Node<E> parentNode = nodeP.get();
+        Optional<Node<E>> parentResult = findBy(parent);
+        Optional<Node<E>> childResult = findBy(child);
+        if (parentResult.isPresent() && !childResult.isPresent()) {
+            Node<E> parentNode = parentResult.get();
             Node<E> childNode = new Node<>(child);
             parentNode.add(childNode);
             result = true;
@@ -74,6 +74,27 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             }
             for (Node<E> child : element.leaves()) {
                 data.offer(child);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * ${@inheritDoc}
+     */
+    @Override
+    public boolean isBinary() {
+        boolean result = true;
+        Queue<Node<E>> nodes = new LinkedList<>();
+        nodes.offer(this.root);
+        while (!nodes.isEmpty()) {
+            Node<E> node = nodes.poll();
+            if (node.leaves().size() > 2) {
+                result = false;
+                break;
+            }
+            for (Node<E> child : node.leaves()) {
+                nodes.offer(child);
             }
         }
         return result;

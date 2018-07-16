@@ -25,4 +25,10 @@ public interface SimpleTree<E extends Comparable<E>> extends Iterable<E> {
      * @return
      */
     Optional<Node<E>> findBy(E value);
+
+    /**
+     * Method isBinary - return true, if tree is binary
+     * @return
+     */
+    boolean isBinary();
 }
