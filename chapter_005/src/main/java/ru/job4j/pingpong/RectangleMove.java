@@ -27,21 +27,27 @@ public class RectangleMove implements Runnable {
         int shift = 1;
         int duration = 20;
         while (true) {
-            while (this.rect.getX() != limitRight) {
-                this.rect.setX(this.rect.getX() + shift);
-                try {
-                    Thread.sleep(duration);
-                } catch (InterruptedException ie) {
-                    ie.printStackTrace();
+            if (!Thread.interrupted()) {
+                while (this.rect.getX() != limitRight) {
+                    this.rect.setX(this.rect.getX() + shift);
+                    try {
+                        Thread.sleep(duration);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                        return;
+                    }
                 }
-            }
-            while (this.rect.getX() != limitLeft) {
-                this.rect.setX(this.rect.getX() - shift);
-                try {
-                    Thread.sleep(duration);
-                } catch (InterruptedException ie) {
-                    ie.printStackTrace();
+                while (this.rect.getX() != limitLeft) {
+                    this.rect.setX(this.rect.getX() - shift);
+                    try {
+                        Thread.sleep(duration);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                        return;
+                    }
                 }
+            } else {
+                return;
             }
         }
     }
