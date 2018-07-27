@@ -7,3 +7,4 @@
 * chapter_002 - ООП
 * chapter_003 - Collections. Lite
 * chapter_004 - Collections. Pro
+* chapter_005 - Multithreading
