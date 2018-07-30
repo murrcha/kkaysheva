@@ -1,5 +1,8 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -11,43 +14,56 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
+@ThreadSafe
 public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * Размер списка
      */
+    @GuardedBy("this")
     private int size;
 
     /**
      * Счетчик изменений
      */
+    @GuardedBy("this")
     private int modCount;
 
     /**
      * Ссылка на первый элемент
      */
+    @GuardedBy("this")
     private Node<E> first;
 
     /**
      * Ссылка на последний элемент
      */
+    @GuardedBy("this")
     private Node<E> last;
 
     /**
      * Method checkIndex - проверяет вхождение индекса в границы размера списка
      * @param index
      */
-    private void checkIndex(int index) {
+    private synchronized void checkIndex(int index) {
         if (index >= this.size || index < 0) {
             throw new IndexOutOfBoundsException(String.format("Index: %s", index));
         }
     }
 
     /**
+     * Method getModCount
+     * @return modCount
+     */
+    private synchronized int getModCount() {
+        return this.modCount;
+    }
+
+    /**
      * Method add - добавляет элемент в список
      * @param data
      */
-    public void add(E data) {
+    public synchronized void add(E data) {
         final Node<E> last = this.last;
         final Node<E> newNode = new Node<>(last, data, null);
         this.last = newNode;
@@ -63,9 +79,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     /**
      * Method get - возвращает элемент по индексу
      * @param index
-     * @return
+     * @return E data
      */
-    public E get(int index) {
+    public synchronized E get(int index) {
         checkIndex(index);
         Node<E> result = this.first;
         for (int i = 0; i < index; i++) {
@@ -76,9 +92,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * Method deleteFirst - удаляет первый элемент из списка и возвращает его значение
-     * @return
+     * @return E data
      */
-    public E deleteFirst() {
+    public synchronized E deleteFirst() {
         final Node<E> first = this.first;
         if (first == null) {
             throw new NoSuchElementException();
@@ -100,9 +116,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * Method deleteLast - удаляет последний элемент из списка и возвращает его
-     * @return
+     * @return E data
      */
-    public E deleteLast() {
+    public synchronized E deleteLast() {
         final Node<E> last = this.last;
         if (last == null) {
             throw new NoSuchElementException();
@@ -124,9 +140,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * Method getSize
-     * @return
+     * @return size
      */
-    public int getSize() {
+    public synchronized int getSize() {
         return this.size;
     }
 
@@ -138,19 +154,25 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return new Iterator<E>() {
 
             int cursor = 0;
-            int expectedModCount = modCount;
+            final int expectedModCount = getModCount();
 
+            /**
+             * ${@inheritDoc}
+             */
             @Override
             public boolean hasNext() {
-                return this.cursor < size;
+                return this.cursor < getSize();
             }
 
+            /**
+             * ${@inheritDoc}
+             */
             @Override
             public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (modCount != expectedModCount) {
+                if (getModCount() != expectedModCount) {
                     throw new ConcurrentModificationException();
                 }
                 E result = get(cursor);
