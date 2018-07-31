@@ -5,4 +5,4 @@
  * @version $Id$
  * @since 0.1
  */
-package ru.job4j.producer_consumer;
+package ru.job4j.producerconsumer;
