@@ -2,6 +2,8 @@ package ru.job4j.producerconsumer;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,6 +20,7 @@ import java.util.Queue;
 public class SimpleBlockingQueue<T> {
 
     private final static int LIMIT = 3;
+    private static final Logger LOG = LogManager.getLogger(SimpleBlockingQueue.class.getName());
 
     @GuardedBy("this")
     private final Queue<T> queue;
@@ -38,7 +41,7 @@ public class SimpleBlockingQueue<T> {
             notify();
         }
         queue.add(value);
-        System.out.println(String.format("%s: Offer %s ok", Thread.currentThread().getId(), value));
+        LOG.info(String.format("offer %s ok", value));
     }
 
     /**
@@ -53,7 +56,7 @@ public class SimpleBlockingQueue<T> {
             notify();
         }
         T value = queue.remove();
-        System.out.println(String.format("%s: Poll %s ok", Thread.currentThread().getId(), value));
+        LOG.info(String.format("poll %s ok", value));
         return value;
     }
 
