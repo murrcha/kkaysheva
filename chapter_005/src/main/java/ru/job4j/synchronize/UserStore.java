@@ -10,11 +10,7 @@ import java.util.Map;
 public class UserStore {
 
     @GuardedBy("this")
-    private final Map<Integer, Integer> users;
-
-    public UserStore() {
-        users = new HashMap<>();
-    }
+    private final Map<Integer, Integer> users = new HashMap<>();;
 
     /**
      * Method add - add new user
