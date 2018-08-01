@@ -14,6 +14,8 @@ public class RectangleMove implements Runnable {
     private static final int LIMIT_R = 290;
     private static final int LIMIT_L = 0;
     private static final int DURATION = 20;
+    private static final int SHIFT_R = 1;
+    private static final int SHIFT_L = -1;
 
     private final Rectangle rect;
 
@@ -26,13 +28,13 @@ public class RectangleMove implements Runnable {
      */
     @Override
     public void run() {
-        int shift = 1;
+        int shift = SHIFT_R;
         while (!Thread.interrupted()) {
             if (this.rect.getX() == LIMIT_R) {
-                shift = -1;
+                shift = SHIFT_L;
             }
             if (this.rect.getX() == LIMIT_L) {
-                shift = 1;
+                shift = SHIFT_R;
             }
             this.rect.setX(this.rect.getX() + shift);
             try {
