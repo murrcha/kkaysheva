@@ -17,7 +17,7 @@ public class CountTest {
     private class ThreadCount extends Thread {
         private final Count count;
 
-        public ThreadCount(Count count) {
+        public ThreadCount(final Count count) {
             this.count = count;
         }
 

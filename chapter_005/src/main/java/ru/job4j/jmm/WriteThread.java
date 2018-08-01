@@ -9,10 +9,10 @@ package ru.job4j.jmm;
  */
 public class WriteThread implements Runnable {
 
-    private Counter counter;
-    private int limit;
+    private final Counter counter;
+    private final int limit;
 
-    public WriteThread(Counter counter, int limit) {
+    public WriteThread(final Counter counter, int limit) {
         this.counter = counter;
         this.limit = limit;
     }

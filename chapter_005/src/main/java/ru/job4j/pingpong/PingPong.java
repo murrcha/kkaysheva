@@ -21,7 +21,7 @@ public class PingPong extends Application {
      * ${@inheritDoc}
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         int limitX = 300;
         int limitY = 300;
         Group group = new Group();

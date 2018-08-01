@@ -9,10 +9,10 @@ package ru.job4j.jmm;
  */
 public class ReadThread implements Runnable {
 
-    private Counter counter;
-    private int limit;
+    private final Counter counter;
+    private final int limit;
 
-    public ReadThread(Counter counter, int limit) {
+    public ReadThread(final Counter counter, int limit) {
         this.counter = counter;
         this.limit = limit;
     }
