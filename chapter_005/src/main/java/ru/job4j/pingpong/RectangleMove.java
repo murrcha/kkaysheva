@@ -11,6 +11,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class RectangleMove implements Runnable {
 
+    private static final int LIMIT_R = 290;
+    private static final int LIMIT_L = 0;
+    private static final int DURATION = 20;
+
     private final Rectangle rect;
 
     public RectangleMove(Rectangle rect) {
@@ -22,31 +26,19 @@ public class RectangleMove implements Runnable {
      */
     @Override
     public void run() {
-        int limitRight = 290;
-        int limitLeft = 0;
         int shift = 1;
-        int duration = 20;
-        while (true) {
-            if (!Thread.interrupted()) {
-                while (this.rect.getX() != limitRight) {
-                    this.rect.setX(this.rect.getX() + shift);
-                    try {
-                        Thread.sleep(duration);
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                        return;
-                    }
-                }
-                while (this.rect.getX() != limitLeft) {
-                    this.rect.setX(this.rect.getX() - shift);
-                    try {
-                        Thread.sleep(duration);
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                        return;
-                    }
-                }
-            } else {
+        while (!Thread.interrupted()) {
+            if (this.rect.getX() == LIMIT_R) {
+                shift = -1;
+            }
+            if (this.rect.getX() == LIMIT_L) {
+                shift = 1;
+            }
+            this.rect.setX(this.rect.getX() + shift);
+            try {
+                Thread.sleep(DURATION);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
                 return;
             }
         }
