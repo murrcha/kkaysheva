@@ -41,6 +41,27 @@ public class NonBlockingBaseCacheTest {
         }
     }
 
+    class ModTestValueThread extends Thread {
+
+        private final NonBlockingBaseCache cache;
+
+        public ModTestValueThread(NonBlockingBaseCache cache) {
+            this.cache = cache;
+        }
+
+        @Override
+        public void run() {
+            int count = 0;
+            while (count < 999999) {
+                count++;
+                int temp = cache.getTestValue();
+                temp++;
+                int version = cache.getModCount();
+                cache.setTestValue(temp, version);
+            }
+        }
+    }
+
     @Before
     public void beforeTest() {
         cache.add(new Base(1, "Artem"));
@@ -111,5 +132,22 @@ public class NonBlockingBaseCacheTest {
         assertThat(cache.get(2).getName(), is("Oleg"));
         assertThat(cache.get(1).getVersion(), is(10));
         assertThat(cache.get(2).getVersion(), is(10));
+    }
+
+    /**
+     * Test OptimisticException
+     */
+    @Test
+    public void when2ThreadsWriteOneValueThenReturnException() {
+        ModTestValueThread thread1 = new ModTestValueThread(cache);
+        ModTestValueThread thread2 = new ModTestValueThread(cache);
+        thread1.start();
+        thread2.start();
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 }

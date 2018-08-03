@@ -1,5 +1,6 @@
 package ru.job4j.nonblockingcache;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -11,7 +12,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class NonBlockingBaseCache {
 
-    private ConcurrentHashMap<Integer, Base> cache = new ConcurrentHashMap<>();
+    /**
+     * For test call OptimisticException
+     */
+    private volatile int testValue;
+    private int modCount = 0;
+
+    private Map<Integer, Base> cache = new ConcurrentHashMap<>();
 
     /**
      * Method add - add new model in cache
@@ -26,13 +33,13 @@ public class NonBlockingBaseCache {
      * @param model - exist model
      * @throws OptimisticException
      */
-    public void update(Base model) {
+    public void update(Base model) throws OptimisticException {
         cache.computeIfPresent(model.getId(), (key, value) -> {
-            if (cache.get(model.getId()).getVersion() == model.getVersion()) {
+            if (cache.get(key).getVersion() == model.getVersion()) {
                 model.changeVersion();
                 return model;
             } else {
-                throw new OptimisticException("model is busy");
+                throw new OptimisticException("incorrect version");
             }
         });
     }
@@ -54,5 +61,34 @@ public class NonBlockingBaseCache {
      */
     public Base get(int id) {
         return cache.get(id);
+    }
+
+    /**
+     * Method getTestValue
+     * @return
+     */
+    public int getTestValue() {
+        return this.testValue;
+    }
+
+    /**
+     * Method getModCount
+     * @return
+     */
+    public int getModCount() {
+        return this.modCount;
+    }
+
+    /**
+     * Method setTestValue
+     * @param testValue
+     * @param modCount
+     */
+    public void setTestValue(int testValue, int modCount) throws OptimisticException {
+        if (this.modCount != modCount) {
+            throw new OptimisticException("Incorrect version");
+        }
+        this.testValue = testValue;
+        this.modCount++;
     }
 }
