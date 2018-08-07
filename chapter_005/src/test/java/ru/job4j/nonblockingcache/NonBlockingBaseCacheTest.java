@@ -16,6 +16,8 @@ import static org.junit.Assert.assertThat;
  */
 public class NonBlockingBaseCacheTest {
 
+    private OptimisticException exception = null;
+
     private NonBlockingBaseCache cache = new NonBlockingBaseCache();
 
     class TestThread extends Thread {
@@ -57,7 +59,12 @@ public class NonBlockingBaseCacheTest {
                 int temp = cache.getTestValue();
                 temp++;
                 int version = cache.getModCount();
-                cache.setTestValue(temp, version);
+                try {
+                    cache.setTestValue(temp, version);
+                } catch (OptimisticException oe) {
+                    exception = oe;
+                }
+
             }
         }
     }
@@ -137,7 +144,7 @@ public class NonBlockingBaseCacheTest {
     /**
      * Test OptimisticException
      */
-    @Test
+    @Test(expected = OptimisticException.class)
     public void when2ThreadsWriteOneValueThenReturnException() {
         ModTestValueThread thread1 = new ModTestValueThread(cache);
         ModTestValueThread thread2 = new ModTestValueThread(cache);
@@ -148,6 +155,9 @@ public class NonBlockingBaseCacheTest {
             thread2.join();
         } catch (InterruptedException ie) {
             ie.printStackTrace();
+        }
+        if (exception != null) {
+            throw exception;
         }
     }
 }
