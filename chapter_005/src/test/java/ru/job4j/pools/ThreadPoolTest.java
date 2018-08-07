@@ -38,14 +38,13 @@ public class ThreadPoolTest {
      * Test work, shutdown
      */
     @Test
-    public void whenThen() {
+    public void whenPoolWorkThenRunGoodJob() {
         ThreadPool pool = new ThreadPool();
         int size = Runtime.getRuntime().availableProcessors();
         for (int i = 0; i < size; i++) {
             pool.work(new GoodJob());
             pool.work(new BadJob());
         }
-
         pool.shutdown();
         assertThat(pool.isStopped(), is(true));
     }
