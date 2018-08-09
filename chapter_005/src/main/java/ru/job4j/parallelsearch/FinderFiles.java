@@ -24,8 +24,8 @@ public class FinderFiles extends SimpleFileVisitor<Path> {
 
     /**
      * init FinderFiles
-     * @param pattern
-     * @param files
+     * @param pattern extensions
+     * @param files queue
      */
     public FinderFiles(String pattern, BlockingQueue<String> files) {
         matcher = FileSystems.getDefault().getPathMatcher(String.format("glob:%s", pattern));

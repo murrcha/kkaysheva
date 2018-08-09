@@ -33,9 +33,9 @@ public class ParallelSearch {
 
     /**
      * init root, text, extensions
-     * @param root
-     * @param text
-     * @param extensions
+     * @param root directory
+     * @param text pattern
+     * @param extensions files
      */
     public ParallelSearch(String root, String text, List<String> extensions) {
         this.root = root;
@@ -60,44 +60,44 @@ public class ParallelSearch {
         return pattern.toString();
     }
 
+    private synchronized boolean filesIsEmpty() {
+        return files.isEmpty();
+    }
+
+    private synchronized BlockingQueue<String> getFiles() {
+        return this.files;
+    }
+
     /**
      * Method init describe and start search, read threads
      */
     public void init() {
-        Thread search = new Thread() {
-            @Override
-            public void run() {
-                FinderFiles finder = new FinderFiles(getPattern(extensions), files);
-                Path startPath = Paths.get(root);
+        Thread search = new Thread(() -> {
+            FinderFiles finder = new FinderFiles(getPattern(extensions), getFiles());
+            Path startPath = Paths.get(root);
+            try {
+                Files.walkFileTree(startPath, finder);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            finish = true;
+        });
+        Thread read = new Thread(() -> {
+            while (!filesIsEmpty() || !finish) {
                 try {
-                    Files.walkFileTree(startPath, finder);
-                } catch (IOException ioe) {
+                    Path name = Paths.get(getFiles().take());
+                    if (name != null) {
+                        String content = new String(Files.readAllBytes(name));
+                        if (content.contains(text)) {
+                            System.out.println(String.format("Add file [%s] to paths list (contains [%s])", name, text));
+                            paths.add(name.toString());
+                        }
+                    }
+                } catch (IOException | InterruptedException ioe) {
                     ioe.printStackTrace();
                 }
-                finish = true;
             }
-        };
-        Thread read = new Thread() {
-            @Override
-            public void run() {
-                while (!files.isEmpty() || !finish) {
-                    try {
-                        Path name = Paths.get(files.take());
-                        if (name != null) {
-                            String content = new String(Files.readAllBytes(name));
-                            if (content.contains(text)) {
-                                System.out.println(String.format("Add file [%s] to paths list (contains [%s])", name, text));
-                                paths.add(name.toString());
-                            }
-                        }
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    } catch (InterruptedException ie) {
-                        ie.printStackTrace();
-                    }
-                }
-            }
-        };
+        });
         search.start();
         read.start();
         try {
