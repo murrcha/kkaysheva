@@ -1,5 +1,8 @@
 package ru.job4j.executorservice;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * EmailNotification
  *
@@ -10,7 +13,7 @@ package ru.job4j.executorservice;
 public class EmailNotification {
 
     /**
-     * Subjectå
+     * Subject
      */
     private String subject;
 
@@ -20,13 +23,10 @@ public class EmailNotification {
     private String body;
 
     /**
-     * Method emailTo add subject and body
-     * @param user
+     * Executor service
      */
-    public void emailTo(User user) {
-        this.subject = String.format("Notification %s to email %s", user.getName(), user.getEmail());
-        this.body = String.format("Add new event to %s", user.getName());
-    }
+    private ExecutorService pool = Executors.newFixedThreadPool(
+            Runtime.getRuntime().availableProcessors());
 
     /**
      * Method send
@@ -34,8 +34,27 @@ public class EmailNotification {
      * @param body
      * @param email
      */
-    public void send(String subject, String body, String email) {
+    private void send(String subject, String body, String email) {
         System.out.println(String.format("Send to %s", email));
+    }
+
+    /**
+     * Method emailTo add subject and body
+     * @param user
+     */
+    public void emailTo(User user) {
+        pool.submit(() -> {
+            subject = String.format("Notification %s to email %s", user.getName(), user.getEmail());
+            body = String.format("Add new event to %s", user.getName());
+            send(subject, body, user.getEmail());
+        });
+    }
+
+    /**
+     * Method close shutdown executor service
+     */
+    public void close() {
+        this.pool.shutdown();
     }
 
     /**
