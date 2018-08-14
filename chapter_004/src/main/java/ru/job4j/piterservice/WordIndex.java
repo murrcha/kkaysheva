@@ -1,10 +1,6 @@
 package ru.job4j.piterservice;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -38,7 +34,6 @@ public class WordIndex {
                     .next()
                     .toLowerCase();
             if (!word.isEmpty()) {
-                System.out.println(word);
                 Set<Integer> entry;
                 if (!index.containsKey(word)) {
                     entry = new HashSet<>();
