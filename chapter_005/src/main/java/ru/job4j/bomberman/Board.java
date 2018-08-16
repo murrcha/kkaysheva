@@ -3,6 +3,7 @@ package ru.job4j.bomberman;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -38,7 +39,7 @@ public class Board {
      * Method startPosition lock start position
      * @param position cell
      */
-    public synchronized void startPosition(Cell position) {
+    public void startPosition(Cell position) {
         board[position.getX()][position.getY()].lock();
     }
 
@@ -48,13 +49,18 @@ public class Board {
      * @param destination new position
      * @return is move or not
      */
-    public synchronized boolean move(Cell source, Cell destination) {
+    public boolean move(Cell source, Cell destination) {
         boolean result = false;
-        if (board[destination.getX()][destination.getY()].tryLock()) {
-            board[destination.getX()][destination.getY()].lock();
-            board[source.getX()][source.getY()].unlock();
-            result = true;
+        try {
+            if (board[destination.getX()][destination.getY()].tryLock(500, TimeUnit.MILLISECONDS)) {
+                board[destination.getX()][destination.getY()].lock();
+                board[source.getX()][source.getY()].unlock();
+                result = true;
+            }
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
         }
+
         return result;
     }
 
@@ -62,7 +68,7 @@ public class Board {
      * Method getSize
      * @return size board
      */
-    public synchronized int getSize() {
+    public int getSize() {
         return this.board.length;
     }
 }

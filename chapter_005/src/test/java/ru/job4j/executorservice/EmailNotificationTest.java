@@ -23,7 +23,7 @@ public class EmailNotificationTest {
     public void whenSendEmailWithExecutorServiceThenTaskIsDone() {
         EmailNotification service = new EmailNotification();
         List<User> users = new ArrayList<>();
-        for (int index = 0; index < 100; index++) {
+        for (int index = 0; index < 10; index++) {
             users.add(new User(String.format("Name-%s", index), String.format("user-%s@mail.com", index)));
         }
         for (User user : users) {
