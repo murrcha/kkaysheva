@@ -28,6 +28,7 @@ public class FinderFilesTest {
     /**
      * Test finder files
      */
+    @Ignore
     @Test
     public void whenFinderFilesRunThenReturnFilesInList() {
         BlockingQueue<String> files = new LinkedBlockingQueue<>();

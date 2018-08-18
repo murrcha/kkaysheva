@@ -1,13 +1,13 @@
 package ru.job4j.producerconsumer;
 
 /**
- * ParallelSearchStopConsumer
+ * StopConsumer
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
  * @since 0.1
  */
-public class ParallelSearchStopConsumer {
+public class StopConsumer {
 
     public static void main(String[] args) {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();

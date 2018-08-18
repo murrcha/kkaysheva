@@ -11,7 +11,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * ParallelSearch - search text in file system
+ * StopConsumer - search text in file system
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
@@ -56,15 +56,23 @@ public class ParallelSearch {
             pattern.append(",");
         }
         pattern.append("}");
-        pattern = pattern.deleteCharAt(pattern.lastIndexOf(","));
+        pattern.deleteCharAt(pattern.lastIndexOf(","));
         return pattern.toString();
     }
 
-    private synchronized boolean filesIsEmpty() {
+    /**
+     * Method filesIsEmpty
+     * @return flag
+     */
+    private boolean filesIsEmpty() {
         return files.isEmpty();
     }
 
-    private synchronized BlockingQueue<String> getFiles() {
+    /**
+     * Method getFiles
+     * @return files
+     */
+    private BlockingQueue<String> getFiles() {
         return this.files;
     }
 
@@ -95,6 +103,7 @@ public class ParallelSearch {
                     }
                 } catch (IOException | InterruptedException ioe) {
                     ioe.printStackTrace();
+                    return;
                 }
             }
         });
@@ -102,7 +111,10 @@ public class ParallelSearch {
         read.start();
         try {
             search.join();
-            read.join();
+            read.join(5000);
+            if (read.isAlive()) {
+                read.interrupt();
+            }
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }

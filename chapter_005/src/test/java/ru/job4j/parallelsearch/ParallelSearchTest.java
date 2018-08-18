@@ -1,7 +1,6 @@
 package ru.job4j.parallelsearch;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * ParallelSearch Test
+ * StopConsumer Test
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
@@ -27,19 +26,21 @@ public class ParallelSearchTest {
     @Before
     public void beforeTest() {
         extensions.add("java");
+        extensions.add("class");
         parallelSearch = new ParallelSearch(ROOT, TEXT, extensions);
     }
 
     /**
      * Test parallel search
      */
-    @Ignore
     @Test
     public void whenRunParallelSearchThenReturnResult() {
         parallelSearch.init();
         List<String> result = parallelSearch.result();
-        assertThat(result.size(), is(2));
+        assertThat(result.size(), is(4));
         System.out.println(result.get(0));
         System.out.println(result.get(1));
+        System.out.println(result.get(2));
+        System.out.println(result.get(3));
     }
 }
