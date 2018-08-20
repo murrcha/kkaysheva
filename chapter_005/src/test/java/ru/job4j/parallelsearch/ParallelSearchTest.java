@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * StopConsumer Test
+ * ParallelSearch Test
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$

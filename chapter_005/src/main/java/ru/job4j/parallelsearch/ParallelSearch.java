@@ -11,7 +11,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * StopConsumer - search text in file system
+ * ParallelSearch - search text in file system
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$

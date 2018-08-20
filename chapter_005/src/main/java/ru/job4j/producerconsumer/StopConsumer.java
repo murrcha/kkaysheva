@@ -13,7 +13,7 @@ public class StopConsumer {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
         final Thread consumer = new Thread(
                 () -> {
-                    while (true) {
+                    while (!Thread.currentThread().isInterrupted()) {
                         try {
                             System.out.println(queue.poll());
                         } catch (InterruptedException ie) {
@@ -26,7 +26,7 @@ public class StopConsumer {
         consumer.start();
         new Thread(
                 () -> {
-                    for (int index = 0; index != 50; index++) {
+                    for (int index = 0; index != 5; index++) {
                         try {
                             queue.offer(index);
                             Thread.sleep(500);
