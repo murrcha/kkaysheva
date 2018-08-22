@@ -61,27 +61,11 @@ public class ParallelSearch {
     }
 
     /**
-     * Method filesIsEmpty
-     * @return flag
-     */
-    private boolean filesIsEmpty() {
-        return files.isEmpty();
-    }
-
-    /**
-     * Method getFiles
-     * @return files
-     */
-    private BlockingQueue<String> getFiles() {
-        return this.files;
-    }
-
-    /**
      * Method init describe and start search, read threads
      */
     public void init() {
         Thread search = new Thread(() -> {
-            FinderFiles finder = new FinderFiles(getPattern(extensions), getFiles());
+            FinderFiles finder = new FinderFiles(getPattern(extensions), files);
             Path startPath = Paths.get(root);
             try {
                 Files.walkFileTree(startPath, finder);
@@ -91,19 +75,22 @@ public class ParallelSearch {
             finish = true;
         });
         Thread read = new Thread(() -> {
-            while (!filesIsEmpty() || !finish) {
+            while (true) {
                 try {
-                    Path name = Paths.get(getFiles().take());
-                    if (name != null) {
-                        String content = new String(Files.readAllBytes(name));
-                        if (content.contains(text)) {
-                            System.out.println(String.format("Add file [%s] to paths list (contains [%s])", name, text));
-                            paths.add(name.toString());
+                    if (!files.isEmpty()) {
+                        Path name = Paths.get(files.take());
+                        if (name != null) {
+                            String content = new String(Files.readAllBytes(name));
+                            if (content.contains(text)) {
+                                System.out.println(String.format("Add file [%s] to paths list (contains [%s])", name, text));
+                                paths.add(name.toString());
+                            }
                         }
+                    } else if (finish) {
+                        return;
                     }
                 } catch (IOException | InterruptedException ioe) {
                     ioe.printStackTrace();
-                    return;
                 }
             }
         });
@@ -111,10 +98,7 @@ public class ParallelSearch {
         read.start();
         try {
             search.join();
-            read.join(5000);
-            if (read.isAlive()) {
-                read.interrupt();
-            }
+            read.join();
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }
@@ -125,6 +109,6 @@ public class ParallelSearch {
      * @return result list
      */
     public synchronized List<String> result() {
-        return this.paths;
+        return paths;
     }
 }
