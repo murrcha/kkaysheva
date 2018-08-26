@@ -1,9 +1,10 @@
 package ru.job4j.piterservice;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.nio.charset.StandardCharsets;
 
 /**
  * WordIndex
@@ -15,47 +16,44 @@ import java.util.regex.Pattern;
 public class WordIndex {
 
     /**
-     * index map
+     * length = 0;
      */
-    private Map<String, Set<Integer>> index = new HashMap<>();
+    private static final int LENGTH_ZERO = 0;
 
     /**
-     * Method loadFile read file and build index
-     * @param filName file name
+     * end of file
+     */
+    private static final int END_OF_FILE = -1;
+
+    /**
+     * prefix trie
+     */
+    private Trie trie = new Trie();
+
+    /**
+     * Method loadFile - read file and build prefix trie
+     * @param fileName file
      * @throws IOException
      */
-    public void loadFile(String filName) throws IOException {
-        Scanner scanner = new Scanner(Paths.get(filName).toFile().getCanonicalFile());
-        Pattern separators = Pattern.compile("%|\"|[0-9]|:|;|<|/|>|\\s|\\.|\\,|-|\\n|\\r|\\r\\n|\\]|\\[|\\{|\\}|\\)|\\(");
-        scanner.useDelimiter(separators);
-        Integer count = 0;
-        while (scanner.hasNext()) {
-            String word = scanner
-                    .next()
-                    .toLowerCase();
-            if (!word.isEmpty()) {
-                Set<Integer> entry;
-                if (!index.containsKey(word)) {
-                    entry = new HashSet<>();
-                    entry.add(count);
-                    index.put(word, entry);
-                } else {
-                    entry = index.get(word);
-                    entry.add(count);
-                    index.put(word, entry);
-                }
-                count++;
+    public void loadFile(String fileName) throws IOException {
+        BufferedReader reader = Files.newBufferedReader(Paths.get(fileName), StandardCharsets.UTF_8);
+        int ch;
+        StringBuilder word = new StringBuilder();
+        while ((ch = reader.read()) != END_OF_FILE) {
+            if (Character.isLetter(ch)) {
+                word.append((char) ch);
+            } else if (!word.toString().isEmpty()){
+                trie.insertWord(word.toString());
+                word.setLength(LENGTH_ZERO);
             }
         }
-        System.out.println(this.index);
     }
 
     /**
-     * Method getIndexes4Word get positions of word
-     * @param searchWord word
-     * @return set of positions
+     * Method getTrie
+     * @return trie
      */
-    public Set<Integer> getIndexes4Word(String searchWord) {
-        return this.index.getOrDefault(searchWord, null);
+    public Trie getTrie() {
+        return trie;
     }
 }
