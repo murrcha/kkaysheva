@@ -42,7 +42,7 @@ public class WordIndex {
         while ((ch = reader.read()) != END_OF_FILE) {
             if (Character.isLetter(ch)) {
                 word.append((char) ch);
-            } else if (!word.toString().isEmpty()){
+            } else if (!word.toString().isEmpty()) {
                 trie.insertWord(word.toString());
                 word.setLength(LENGTH_ZERO);
             }
