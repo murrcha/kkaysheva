@@ -23,6 +23,9 @@ public class Cell {
      * @param y y
      */
     public Cell(int x, int y) {
+        if (x < 0 || x >= Board.SIZE || y < 0 || y >= Board.SIZE) {
+            throw new IllegalArgumentException("Illegal coordinate x or y");
+        }
         this.x = x;
         this.y = y;
     }

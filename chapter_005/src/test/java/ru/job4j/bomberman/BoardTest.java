@@ -1,5 +1,6 @@
 package ru.job4j.bomberman;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,20 +15,21 @@ public class BoardTest {
     /**
      * Test bomber men start
      */
+    @Ignore
     @Test
-    public void whenRunTwoBomberMenThenTheyMoveAroundTheBoard() {
-        int sizeBoard = 20;
-        Board board = new Board(sizeBoard);
-        BomberMan bomberManOne = new BomberMan(board);
-        BomberMan bomberManTwo = new BomberMan(board);
-        bomberManOne.start();
-        bomberManTwo.start();
+    public void whenRunGameWithMonstersAndBomberManMoveThen() {
+        int monsters = 50;
+        int blocks = 50;
+        Board board = new Board(monsters, blocks);
+        BomberMan bomberMan = new BomberMan(board);
+        bomberMan.start();
         try {
-            Thread.sleep(5000);
-            bomberManOne.interrupt();
-            bomberManTwo.interrupt();
+            Thread.sleep(3000);
+
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }
+        bomberMan.interrupt();
+        board.stopMonsters();
     }
 }
