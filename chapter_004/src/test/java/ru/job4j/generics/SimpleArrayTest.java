@@ -32,7 +32,7 @@ public class SimpleArrayTest {
      */
     @Test
     public void whenCreateSimpleArrayWithInvalidSizeThenSetDefaultSize10() {
-        SimpleArray<Integer> testArray = new SimpleArray<Integer>(-1);
+        SimpleArray<Integer> testArray = new SimpleArray<>(-1);
         assertThat(testArray.getSize(), is(10));
     }
 

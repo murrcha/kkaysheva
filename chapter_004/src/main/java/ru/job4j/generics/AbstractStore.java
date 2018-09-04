@@ -16,7 +16,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
 
     /**
      * Инициализация массива
-     * @param size
+     * @param size size
      */
     protected AbstractStore(int size) {
         this.elements = new SimpleArray<>(size);

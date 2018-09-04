@@ -1,7 +1,5 @@
 package ru.job4j.search;
 
-import org.omg.CORBA.PERSIST_STORE;
-
 import java.util.ArrayList;
 import java.util.List;
 

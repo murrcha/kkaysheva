@@ -1,7 +1,5 @@
 package ru.job4j.chessboard;
 
-import java.util.Arrays;
-
 /**
  * Board - шахматная доска
  *

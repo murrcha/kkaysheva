@@ -2,8 +2,6 @@ package ru.job4j.generics;
 
 import org.junit.Test;
 
-import javax.jws.soap.SOAPBinding;
-
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;

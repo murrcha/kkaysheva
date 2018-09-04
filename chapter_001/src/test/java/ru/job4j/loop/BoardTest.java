@@ -17,7 +17,7 @@ public class BoardTest {
      * Test paint 3 x 3
      */
     @Test
-    public void whenPaintBoardWithWidhtThreeAndHeightThreeThenStringWithThreeColsAndThreeRows() {
+    public void whenPaintBoardWithWidthThreeAndHeightThreeThenStringWithThreeColsAndThreeRows() {
         Board board = new Board();
         String result = board.paint(3, 3);
         final String line = System.lineSeparator();
@@ -29,7 +29,7 @@ public class BoardTest {
      * Test paint 5 x 4
      */
     @Test
-    public void whenPaintBoardWithWidhtFiveAndHeightFourThenStringWithFiveColsAndFourRows() {
+    public void whenPaintBoardWithWidthFiveAndHeightFourThenStringWithFiveColsAndFourRows() {
         Board board = new Board();
         String result = board.paint(5, 4);
         final String line = System.lineSeparator();

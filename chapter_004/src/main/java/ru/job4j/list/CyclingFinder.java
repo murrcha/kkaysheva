@@ -23,8 +23,8 @@ public class CyclingFinder {
 
     /**
      * Method hasCycle - проверяет список на наличие замыканий
-     * @param first
-     * @return
+     * @param first first
+     * @return result
      */
     public boolean hasCycle(Node first) {
         boolean result = false;

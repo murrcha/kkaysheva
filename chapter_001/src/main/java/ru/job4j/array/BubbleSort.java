@@ -1,7 +1,7 @@
 package ru.job4j.array;
 
 /**
- * BuubleSort - сортировка массива методом перестановки (пузырьком)
+ * BubbleSort - сортировка массива методом перестановки (пузырьком)
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
