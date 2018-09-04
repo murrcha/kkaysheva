@@ -17,7 +17,7 @@ public class Counter {
 
     /**
      * Method getCount
-     * @return
+     * @return count
      */
     public Integer getCount() {
         return this.count;
@@ -25,7 +25,7 @@ public class Counter {
 
     /**
      * Method setCount
-     * @param count
+     * @param count count
      */
     public void setCount(Integer count) {
         this.count = count;

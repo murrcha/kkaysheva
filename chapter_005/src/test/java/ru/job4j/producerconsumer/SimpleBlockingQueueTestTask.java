@@ -23,17 +23,15 @@ public class SimpleBlockingQueueTestTask {
         final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
         final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
         Thread producer = new Thread(
-                () -> {
-                    IntStream.range(0, 5).forEach(
-                            i -> {
-                                try {
-                                    queue.offer(i);
-                                } catch (InterruptedException ie) {
-                                    ie.printStackTrace();
-                                }
+                () -> IntStream.range(0, 5).forEach(
+                        i -> {
+                            try {
+                                queue.offer(i);
+                            } catch (InterruptedException ie) {
+                                ie.printStackTrace();
                             }
-                    );
-                }
+                        }
+                )
         );
         producer.start();
         Thread consumer = new Thread(

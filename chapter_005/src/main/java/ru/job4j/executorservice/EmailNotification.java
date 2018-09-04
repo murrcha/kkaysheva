@@ -25,22 +25,22 @@ public class EmailNotification {
     /**
      * Executor service
      */
-    private ExecutorService pool = Executors.newFixedThreadPool(
+    private final ExecutorService pool = Executors.newFixedThreadPool(
             Runtime.getRuntime().availableProcessors());
 
     /**
      * Method send
-     * @param subject
-     * @param body
-     * @param email
+     * @param subject subject
+     * @param body body
+     * @param email email
      */
     private void send(String subject, String body, String email) {
-        System.out.println(String.format("Send to %s", email));
+        System.out.println(String.format("Send to %s, %s, %s", email, subject, body));
     }
 
     /**
      * Method emailTo add subject and body
-     * @param user
+     * @param user user
      */
     public void emailTo(User user) {
         pool.submit(() -> {
@@ -55,21 +55,5 @@ public class EmailNotification {
      */
     public void close() {
         this.pool.shutdown();
-    }
-
-    /**
-     * Method getSubject return subject
-     * @return subject
-     */
-    public String getSubject() {
-        return subject;
-    }
-
-    /**
-     * Method body return body
-     * @return body
-     */
-    public String getBody() {
-        return body;
     }
 }

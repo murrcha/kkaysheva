@@ -12,17 +12,17 @@ public class User {
     /**
      * Name
      */
-    private String name;
+    private final String name;
 
     /**
      * Email
      */
-    private String email;
+    private final String email;
 
     /**
      * Init name and email
-     * @param name
-     * @param email
+     * @param name name
+     * @param email email
      */
     public User(String name, String email) {
         this.name = name;
@@ -43,13 +43,5 @@ public class User {
      */
     public String getEmail() {
         return email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

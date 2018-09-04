@@ -25,11 +25,6 @@ public class ThreadPool {
     private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
 
     /**
-     * Count of processors at system
-     */
-    private int size = Runtime.getRuntime().availableProcessors();
-
-    /**
      * State of pool
      */
     private boolean isStopped = false;
@@ -38,6 +33,7 @@ public class ThreadPool {
      * Init threads in pool
      */
     public ThreadPool() {
+        int size = Runtime.getRuntime().availableProcessors();
         for (int index = 0; index < size; index++) {
             threads.add(new PoolThread(tasks));
         }

@@ -44,7 +44,7 @@ public class Base {
 
     /**
      * Method setName
-     * @param name
+     * @param name name
      */
     public void setName(String name) {
         this.name = name;
