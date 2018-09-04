@@ -20,10 +20,8 @@ public class Monster extends Thread {
     private final Board board;
 
     /**
-     * Position
+     * init board
      */
-    private Cell position;
-
     public Monster(Board board) {
         this.board = board;
     }
@@ -33,11 +31,12 @@ public class Monster extends Thread {
      */
     @Override
     public void run() {
+        Cell position;
         do {
-            position = Cell.getNewPosition(board.getSize());
+            position = Cell.getNewPosition(Board.SIZE);
         } while (!board.startPosition(position));
         while (!isInterrupted()) {
-            Cell destination = Cell.getNewPosition(board.getSize());
+            Cell destination = Cell.getNewPosition(Board.SIZE);
             if (board.move(position, destination)) {
                 position = destination;
                 LOG.info(String.format("Monster position: %s %s",

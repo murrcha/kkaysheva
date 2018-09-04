@@ -12,6 +12,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class BomberMan extends Thread {
 
+    /**
+     * logger
+     */
     private static final Logger LOG = LogManager.getLogger(BomberMan.class.getName());
 
     /**
@@ -44,7 +47,7 @@ public class BomberMan extends Thread {
      */
     public void startGame() {
         do {
-            position = Cell.getNewPosition(board.getSize());
+            position = Cell.getNewPosition(Board.SIZE);
         } while (!board.startPosition(position));
     }
 
@@ -76,13 +79,21 @@ public class BomberMan extends Thread {
         startGame();
         while (!isInterrupted()) {
             try {
-                move(UP);
+                if(!move(UP)) {
+                    move(DOWN);
+                }
                 Thread.sleep(1000);
-                move(RIGHT);
+                if (!move(RIGHT)) {
+                    move(LEFT);
+                }
                 Thread.sleep(1000);
-                move(DOWN);
+                if (!move(DOWN)) {
+                    move(UP);
+                }
                 Thread.sleep(1000);
-                move(LEFT);
+                if (!move(LEFT)) {
+                    move(RIGHT);
+                }
                 Thread.sleep(1000);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();

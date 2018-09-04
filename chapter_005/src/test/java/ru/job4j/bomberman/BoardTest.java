@@ -18,7 +18,7 @@ public class BoardTest {
     @Ignore
     @Test
     public void whenRunGameWithMonstersAndBomberManMoveThen() {
-        int monsters = 50;
+        int monsters = 10;
         int blocks = 50;
         Board board = new Board(monsters, blocks);
         BomberMan bomberMan = new BomberMan(board);

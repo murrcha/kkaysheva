@@ -18,6 +18,9 @@ import java.util.concurrent.locks.ReentrantLock;
 @ThreadSafe
 public class Board {
 
+    /**
+     * logger
+     */
     private static final Logger LOG = LogManager.getLogger(Board.class.getName());
 
     /**
@@ -26,6 +29,9 @@ public class Board {
     private static final int MAXIMUM_MONSTERS = 100;
     private static final int MAXIMUM_BLOCKS = 100;
 
+    /**
+     * size
+     */
     public static final int SIZE = 20;
 
     /**
@@ -124,19 +130,11 @@ public class Board {
     }
 
     /**
-     * Method getSize
-     * @return size board
-     */
-    public int getSize() {
-        return this.SIZE;
-    }
-
-    /**
      * Method stopMonsters interrupt monsters threads
      */
     public void stopMonsters() {
-        for (int index = 0; index < monsters.length; index++) {
-            monsters[index].interrupt();
+        for (Monster monster : monsters) {
+            monster.interrupt();
         }
     }
 }
