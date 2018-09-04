@@ -79,7 +79,7 @@ public class BomberMan extends Thread {
         startGame();
         while (!isInterrupted()) {
             try {
-                if(!move(UP)) {
+                if (!move(UP)) {
                     move(DOWN);
                 }
                 Thread.sleep(1000);
