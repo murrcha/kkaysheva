@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +35,7 @@ public class Tracker implements AutoCloseable {
     private Properties properties;
 
     /**
-     * init tracker by default
+     * init ru.job4j.ru.job4j.tracker by default
      */
     public Tracker() {
         initProperty(CONFIG);
@@ -46,7 +46,7 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
-     * init tracker by config file
+     * init ru.job4j.ru.job4j.tracker by config file
      * @param config file
      */
     public Tracker(String config) {
@@ -71,7 +71,7 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
-     * Method initConnection - init connection to database tracker
+     * Method initConnection - init connection to database ru.job4j.ru.job4j.tracker
      */
     private void initConnection() {
         try {
@@ -85,9 +85,9 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
-     * Method checkExistsDB - check database tracker exists or not
+     * Method checkExistsDB - check database ru.job4j.ru.job4j.tracker exists or not
      * if not, then create database
-     * and then connect to database tracker
+     * and then connect to database ru.job4j.ru.job4j.tracker
      * and create table items
      */
     private void checkExistsDB() {
@@ -145,7 +145,8 @@ public class Tracker implements AutoCloseable {
      */
     public void replace(int id, Item item) {
         try (PreparedStatement statement =
-                     connection.prepareStatement(properties.getProperty("sql.update_item"))) {
+                     connection.prepareStatement(properties.getProperty("sql.update_item"))
+        ) {
             statement.setString(1, item.getName());
             statement.setString(2, item.getDescription());
             statement.setInt(3, id);
@@ -161,7 +162,8 @@ public class Tracker implements AutoCloseable {
      */
     public void delete(int id) {
         try (PreparedStatement statement =
-                     connection.prepareStatement(properties.getProperty("sql.delete_item"))) {
+                     connection.prepareStatement(properties.getProperty("sql.delete_item"))
+        ) {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException sqle) {
@@ -202,7 +204,8 @@ public class Tracker implements AutoCloseable {
     public List<Item> findByName(String key) {
         List<Item> result = new ArrayList<>();
         try (PreparedStatement statement =
-                connection.prepareStatement(properties.getProperty("sql.get_items_by_name"))) {
+                connection.prepareStatement(properties.getProperty("sql.get_items_by_name"))
+        ) {
             statement.setString(1, key);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

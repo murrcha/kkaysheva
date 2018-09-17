@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 /**
  * StubInput - эмуляция выбора пользователя

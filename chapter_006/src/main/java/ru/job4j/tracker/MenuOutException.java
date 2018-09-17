@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 /**
  * MenuOutException - исключение используемое в меню

@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 /**
  * StartUI - точка входа в программу

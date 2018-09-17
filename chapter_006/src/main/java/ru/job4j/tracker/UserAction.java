@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 /**
  * UserAction - определяет общие методы для всех событий

@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 /**
  * BaseAction - абстрактный класс для общих методов key и info

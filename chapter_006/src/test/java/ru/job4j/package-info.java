@@ -1,8 +1,8 @@
 /**
- * Package for tracker db task.
+ * Package for ru.job4j.tracker db task.
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
  * @since 0.1
  */
-package tracker;
+package ru.job4j;

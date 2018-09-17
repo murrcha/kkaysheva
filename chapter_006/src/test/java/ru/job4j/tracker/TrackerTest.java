@@ -1,16 +1,13 @@
-package tracker;
+package ru.job4j.tracker;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.junit.Assert.assertThat;
 
 /**

@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 /**
  * ValidateInput - обрабатывает исключительные ситуации ввода пользователя
