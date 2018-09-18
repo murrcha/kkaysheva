@@ -189,6 +189,7 @@ public class Tracker implements AutoCloseable {
                     item.setCreated(resultSet.getTimestamp("create_date"));
                     items.add(item);
                 }
+                resultSet.close();
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
