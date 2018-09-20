@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -47,12 +48,11 @@ public class FunctionCalculatorTest {
     @Test
     public void whenFunctionIsLogarithmicThenReturnList() {
         int start = 1;
-        int end = 10;
+        int end = 3;
         List<Double> result = calculator.diapason(start, end, Math::log);
-        assertThat(result, is(Arrays.asList(0.0, 0.6931471805599453,
-                1.0986122886681098, 1.3862943611198906,
-                1.6094379124341003, 1.791759469228055,
-                1.9459101490553132, 2.0794415416798357,
-                2.1972245773362196, 2.302585092994046)));
+        assertThat(result.get(0), is(0.0));
+        assertThat(result.get(1), is(closeTo(0.69, 0.004)));
+        assertThat(result.get(2), is(closeTo(1.09, 0.009)));
+
     }
 }
