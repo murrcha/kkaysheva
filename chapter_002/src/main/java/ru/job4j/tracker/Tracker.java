@@ -40,10 +40,10 @@ public class Tracker {
      * @param item - заявка
      */
     public void replace(String id, Item item) {
-        for (int index = 0; index < this.items.size(); index++) {
-            if (this.items.get(index).getId().equals(id)) {
-                this.items.get(index).setName(item.getName());
-                this.items.get(index).setDescription(item.getDescription());
+        for (Item item1 : this.items) {
+            if (item1.getId().equals(id)) {
+                item1.setName(item.getName());
+                item1.setDescription(item.getDescription());
                 break;
             }
         }

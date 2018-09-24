@@ -2,7 +2,6 @@ package ru.job4j.tracker;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -49,7 +48,6 @@ public class ValidateInputTest {
     /**
      * Test ask
      */
-    @Ignore
     @Test
     public void whenInvalidFormatInputThenNumberFormatException() {
         ValidateInput testInput = new ValidateInput(
@@ -62,7 +60,6 @@ public class ValidateInputTest {
     /**
      * Test ask
      */
-    @Ignore
     @Test
     public void whenInvalidNumberInputThenMenuOutException() {
         ValidateInput testInput = new ValidateInput(

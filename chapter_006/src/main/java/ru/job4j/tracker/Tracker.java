@@ -2,8 +2,18 @@ package ru.job4j.tracker;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
-import java.util.*;
+import java.sql.Timestamp;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Tracker - хранилище для заявок
@@ -35,7 +45,7 @@ public class Tracker implements AutoCloseable {
     private Properties properties;
 
     /**
-     * init ru.job4j.ru.job4j.tracker by default
+     * init tracker by default
      */
     public Tracker() {
         initProperty(CONFIG);
@@ -46,7 +56,7 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
-     * init ru.job4j.ru.job4j.tracker by config file
+     * init tracker by config file
      * @param config file
      */
     public Tracker(String config) {
@@ -71,7 +81,7 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
-     * Method initConnection - init connection to database ru.job4j.ru.job4j.tracker
+     * Method initConnection - init connection to database tracker
      */
     private void initConnection() {
         try {
@@ -85,30 +95,45 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
-     * Method checkExistsDB - check database ru.job4j.ru.job4j.tracker exists or not
+     * Method checkExistsDB - check database tracker exists or not
      * if not, then create database
      * and then connect to database ru.job4j.ru.job4j.tracker
      * and create table items
      */
     private void checkExistsDB() {
+        ResultSet resultSet = null;
+        Statement stCreateTable = null;
         try (Connection defaultConnection = DriverManager.getConnection(
                                      properties.getProperty("db.default_host"),
                                      properties.getProperty("db.user"),
                                      properties.getProperty("db.password"));
         Statement stCheckExistsDB = defaultConnection.createStatement()
         ) {
-            ResultSet resultSet = stCheckExistsDB.executeQuery(properties.getProperty("sql.database_exists"));
+            resultSet = stCheckExistsDB.executeQuery(properties.getProperty("sql.database_exists"));
             resultSet.next();
             if (resultSet.getString("exists").equals(NOT_EXISTS)) {
                 stCheckExistsDB.executeUpdate(properties.getProperty("sql.create_database"));
-                resultSet.close();
                 initConnection();
-                Statement stCreateTable = connection.createStatement();
+                stCreateTable = connection.createStatement();
                 stCreateTable.executeUpdate(properties.getProperty("sql.create_table"));
-                stCreateTable.close();
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stCreateTable != null) {
+                try {
+                    stCreateTable.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -118,22 +143,30 @@ public class Tracker implements AutoCloseable {
      * @return новую заявку
      */
     public Item add(Item item) {
+        ResultSet resultSet = null;
         try (PreparedStatement statement =
                      connection.prepareStatement(properties.getProperty("sql.add_new_item"))
         ) {
             statement.setString(1, item.getName());
             statement.setString(2, item.getDescription());
             Calendar calendar = Calendar.getInstance();
-            java.util.Date now = calendar.getTime();
-            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+            Date now = calendar.getTime();
+            Timestamp currentTimestamp = new Timestamp(now.getTime());
             statement.setTimestamp(3, currentTimestamp);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             resultSet.next();
             int id = resultSet.getInt("id");
             item.setId(id);
-            resultSet.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return item;
     }
@@ -172,6 +205,17 @@ public class Tracker implements AutoCloseable {
     }
 
     /**
+     * Method deleteAll - delete all items from table
+     */
+    public void deleteAll() {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(properties.getProperty("sql.delete_items"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Method findAll - ищет все заявки
      * @return - массив всех заявок
      */
@@ -189,7 +233,6 @@ public class Tracker implements AutoCloseable {
                     item.setCreated(resultSet.getTimestamp("create_date"));
                     items.add(item);
                 }
-                resultSet.close();
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -204,11 +247,12 @@ public class Tracker implements AutoCloseable {
      */
     public List<Item> findByName(String key) {
         List<Item> result = new ArrayList<>();
+        ResultSet resultSet = null;
         try (PreparedStatement statement =
                 connection.prepareStatement(properties.getProperty("sql.get_items_by_name"))
         ) {
             statement.setString(1, key);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Item item = new Item();
                 item.setId(resultSet.getInt("id"));
@@ -217,9 +261,16 @@ public class Tracker implements AutoCloseable {
                 item.setCreated(resultSet.getTimestamp("create_date"));
                 result.add(item);
             }
-            resultSet.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return result;
     }
@@ -231,11 +282,12 @@ public class Tracker implements AutoCloseable {
      */
     public Item findById(int id) {
         Item result = null;
+        ResultSet resultSet = null;
         try (PreparedStatement statement =
                      connection.prepareStatement(properties.getProperty("sql.get_item_by_id"))
         ) {
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             resultSet.next();
             if (resultSet.getRow() > 0) {
                 result = new Item();
@@ -244,9 +296,16 @@ public class Tracker implements AutoCloseable {
                 result.setDescription(resultSet.getString("description"));
                 result.setCreated(resultSet.getTimestamp("create_date"));
             }
-            resultSet.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return result;
     }

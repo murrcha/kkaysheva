@@ -2,11 +2,11 @@ package ru.job4j.tracker;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -23,7 +23,7 @@ public class StartUITest {
     /**
      * Хранилище заявок
      */
-    private Tracker testTracker = new Tracker();
+    private final Tracker testTracker = new Tracker();
 
     /**
      * Ответы от пользователя
@@ -38,12 +38,12 @@ public class StartUITest {
     /**
      * Буфер для вывода результата
      */
-    private ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     /**
      * Меню
      */
-    String menu = new StringBuilder()
+    final String menu = new StringBuilder()
             .append(System.lineSeparator())
             .append("---------Меню:-----------")
             .append(System.lineSeparator())
@@ -85,12 +85,13 @@ public class StartUITest {
     /**
      * Test add new item
      */
-    @Ignore
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         testInput = new StubInput(new String[] {"0", "name1", "desc1", "6"});
         new StartUI(testInput, testTracker).init();
-        int testId = testTracker.findByName("name1").get(0).getId();
+        List<Item> items = testTracker.findByName("name1");
+        Item testItem = items.get(items.size() - 1);
+        int testId = testItem.getId();
         assertThat(new String(out.toByteArray()),
                 is(
                         new StringBuilder()
@@ -110,7 +111,6 @@ public class StartUITest {
     /**
      * Test edit item
      */
-    @Ignore
     @Test
     public void whenUserEditItemThenTrackerUpdateThisItem() {
         Item testItem = testTracker.add(new Item("test", "test"));
@@ -136,7 +136,6 @@ public class StartUITest {
     /**
      * Test edit item with fake id
      */
-    @Ignore
     @Test
     public void whenUserEditItemWithFakeIdThenTrackerNotFoundItem() {
         testInput = new StubInput(new String[] {"2", "123", "6"});
@@ -158,7 +157,6 @@ public class StartUITest {
     /**
      * Test delete item
      */
-    @Ignore
     @Test
     public void whenUserDeleteItemThenTrackerDeleteThisItem() {
         Item testItem = testTracker.add(new Item("test", "test"));
@@ -183,7 +181,6 @@ public class StartUITest {
     /**
      * Test delete item with fake id
      */
-    @Ignore
     @Test
     public void whenUserDeleteItemWithFakeIdThenTrackerNotFoundItem() {
         testInput = new StubInput(new String[] {"3", "123", "6"});
@@ -205,9 +202,9 @@ public class StartUITest {
     /**
      * Test showAllItems when no items
      */
-    @Ignore
     @Test
     public void whenUserFindAllItemsAndNoItemsThenNotFoundItems() {
+        testTracker.deleteAll();
         testInput = new StubInput(new String[] {"1", "6"});
         new StartUI(testInput, testTracker).init();
         assertThat(new String(out.toByteArray()),
@@ -227,7 +224,6 @@ public class StartUITest {
     /**
      * Test showAllItems
      */
-    @Ignore
     @Test
     public void whenUserFindAllItemsThenShowAllItems() {
         Item testItem = testTracker.add(new Item("test", "test"));
@@ -252,9 +248,9 @@ public class StartUITest {
     /**
      * Test findItemByName
      */
-    @Ignore
     @Test
     public void whenUserFindItemByNameThenShowThisItem() {
+        testTracker.deleteAll();
         Item testItem = testTracker.add(new Item("test", "test"));
         testInput = new StubInput(new String[] {"5", "test", "6"});
         new StartUI(testInput, testTracker).init();
@@ -279,7 +275,6 @@ public class StartUITest {
     /**
      * Test findItemByName with fake name
      */
-    @Ignore
     @Test
     public void whenUserFindItemByFakeNameThenNotFoundItem() {
         testInput = new StubInput(new String[] {"5", "name1", "6"});
@@ -301,7 +296,6 @@ public class StartUITest {
     /**
      * Test findItemById
      */
-    @Ignore
     @Test
     public void whenUserFindItemByIdThenShowThisItem() {
         Item testItem = testTracker.add(new Item("test", "test"));
@@ -327,7 +321,6 @@ public class StartUITest {
     /**
      * Test findItemById with fake id
      */
-    @Ignore
     @Test
     public void whenUserFindItemByIdWithFakeIdThenNotFoundItem() {
         testInput = new StubInput(new String[] {"4", "123", "6"});
