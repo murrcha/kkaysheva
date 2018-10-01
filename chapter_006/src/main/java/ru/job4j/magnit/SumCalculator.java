@@ -1,5 +1,7 @@
 package ru.job4j.magnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -20,17 +22,23 @@ import java.io.IOException;
 public class SumCalculator {
 
     /**
+     * logger
+     */
+    private static final Logger LOG = LogManager.getLogger(SumCalculator.class.getName());
+
+    /**
      * Method calculateSum - parse xml file and calculate sum all values attribute field
      * @param file xml file
-     * @throws ParserConfigurationException ex
-     * @throws SAXException ex
-     * @throws IOException ex
      */
-    public void calculateSum(File file) throws ParserConfigurationException, SAXException, IOException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser saxParser = factory.newSAXParser();
-        FieldHandler handler = new FieldHandler();
-        saxParser.parse(file, handler);
+    public void calculateSum(File file) {
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            FieldHandler handler = new FieldHandler();
+            saxParser.parse(file, handler);
+        } catch (SAXException | ParserConfigurationException | IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 
     /**

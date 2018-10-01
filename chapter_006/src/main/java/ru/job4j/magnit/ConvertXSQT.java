@@ -1,5 +1,8 @@
 package ru.job4j.magnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -17,19 +20,23 @@ import java.io.File;
 public class ConvertXSQT {
 
     /**
+     * logger
+     */
+    private static final Logger LOG = LogManager.getLogger(ConvertXSQT.class.getName());
+
+    /**
      * Method convert - transform xml file to other xml file by xslt scheme
      * @param source xml file
      * @param destination xml file
      * @param scheme scheme xls file
-     * @throws TransformerException exception
      */
-    public void convert(File source, File destination, File scheme) throws TransformerException {
-        TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer(
-                new StreamSource(scheme)
-        );
-        transformer.transform(
-                new StreamSource(source), new StreamResult(destination)
-        );
+    public void convert(File source, File destination, File scheme) {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer(new StreamSource(scheme));
+            transformer.transform(new StreamSource(source), new StreamResult(destination));
+        } catch (TransformerException e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package ru.job4j.magnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.magnit.pojo.Entry;
 import ru.job4j.magnit.pojo.Field;
 
@@ -21,6 +23,11 @@ import java.util.List;
  */
 @SuppressWarnings("SyntaxError")
 public class StoreSQL implements AutoCloseable {
+
+    /**
+     * logger
+     */
+    private static final Logger LOG = LogManager.getLogger(StoreSQL.class.getName());
 
     /**
      * connection string
@@ -58,20 +65,20 @@ public class StoreSQL implements AutoCloseable {
             }
             statement.executeBatch();
             connection.commit();
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
             if (connection != null) {
                 try {
                     connection.rollback();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } catch (SQLException sqle) {
+                    LOG.error(sqle.getMessage(), sqle);
                 }
             }
         } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
             }
         }
     }
@@ -83,16 +90,24 @@ public class StoreSQL implements AutoCloseable {
     public List<Entry> getEntries() {
         List<Entry> result = new ArrayList<>();
         String sql = "SELECT field from entry";
+        ResultSet resultSet = null;
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(sql);
+            resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 List<Field> fields = new ArrayList<>();
                 fields.add(new Field(resultSet.getInt("field")));
                 result.add(new Entry(fields));
             }
-            resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
         }
         return result;
     }
@@ -103,8 +118,8 @@ public class StoreSQL implements AutoCloseable {
     private void connect() {
         try {
             connection = DriverManager.getConnection(URL);
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
         }
     }
 
@@ -116,7 +131,7 @@ public class StoreSQL implements AutoCloseable {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
     }
 
@@ -128,7 +143,7 @@ public class StoreSQL implements AutoCloseable {
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
     }
 
@@ -136,9 +151,13 @@ public class StoreSQL implements AutoCloseable {
      * ${@inheritDoc}
      */
     @Override
-    public void close() throws SQLException {
-        if (connection != null) {
-            connection.close();
+    public void close() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
         }
     }
 }

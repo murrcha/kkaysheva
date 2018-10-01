@@ -32,26 +32,23 @@ public class ConvertXSQTTest {
      * Test convert
      */
     @Test
-    public void whenConvertXmlFileThenCreateOtherXmlFile() {
-        try (StoreSQL store = new StoreSQL()) {
-            store.generate(2);
-            StoreXML storeXML = new StoreXML(target);
-            List<Entry> entries = store.getEntries();
-            storeXML.save(entries);
-            ConvertXSQT convertXSQT = new ConvertXSQT();
-            convertXSQT.convert(target, result, scheme);
-            assertThat(result.exists(), is(true));
-            BufferedReader reader = new BufferedReader(new FileReader(result));
-            StringBuilder result = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><entries><entry field=\"1\"/><entry field=\"2\"/></entries>";
-            assertThat(result.toString(), is(expected));
-        } catch (SQLException | JAXBException | TransformerException | IOException e) {
-            e.printStackTrace();
+    public void whenConvertXmlFileThenCreateOtherXmlFile() throws IOException {
+        StoreSQL store = new StoreSQL();
+        store.generate(2);
+        StoreXML storeXML = new StoreXML(target);
+        List<Entry> entries = store.getEntries();
+        storeXML.save(entries);
+        ConvertXSQT convertXSQT = new ConvertXSQT();
+        convertXSQT.convert(target, result, scheme);
+        assertThat(result.exists(), is(true));
+        BufferedReader reader = new BufferedReader(new FileReader(result));
+        StringBuilder result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
         }
+        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><entries><entry field=\"1\"/><entry field=\"2\"/></entries>";
+        assertThat(result.toString(), is(expected));
     }
 
 }
