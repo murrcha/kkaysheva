@@ -30,3 +30,8 @@ target
 
 # Mac OS
 .DS_Store
+
+#db
+*.db
+entries.xml
+result.xml
