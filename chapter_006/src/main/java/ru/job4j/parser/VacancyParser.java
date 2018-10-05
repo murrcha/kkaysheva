@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import ru.job4j.parser.pojo.Vacancy;
 
 import java.io.IOException;
 import java.text.ParseException;

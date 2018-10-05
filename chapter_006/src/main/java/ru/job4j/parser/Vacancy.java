@@ -1,4 +1,4 @@
-package ru.job4j.parser.pojo;
+package ru.job4j.parser;
 
 import java.util.Date;
 import java.util.Objects;

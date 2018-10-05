@@ -4,9 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import ru.job4j.parser.dao.VacancyDaoException;
-import ru.job4j.parser.dao.VacancyDaoImpl;
-import ru.job4j.parser.pojo.Vacancy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,13 +62,11 @@ public class Application implements Job {
         for (int page = 1; page < 50; page++) {
             vacancies.addAll(parser.parseHtml(URL + page, null));
         }
-        vacancies.forEach(System.out::println);
         LOG.info(vacancies.size());
-        try {
-            VacancyDaoImpl vacancyDao = new VacancyDaoImpl(properties);
+        try (VacancyDao vacancyDao = new VacancyDao(properties)) {
             vacancyDao.insertSet(vacancies);
             vacancyDao.insertLastUpdateDate(new Date().getTime());
-        } catch (VacancyDaoException e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }
@@ -83,13 +78,11 @@ public class Application implements Job {
         for (int page = 1; page < 10; page++) {
             vacancies.addAll(parser.parseHtml(URL + page, date));
         }
-        vacancies.forEach(System.out::println);
         LOG.info(vacancies.size());
-        try {
-            VacancyDaoImpl vacancyDao = new VacancyDaoImpl(properties);
+        try (VacancyDao vacancyDao = new VacancyDao(properties)) {
             vacancyDao.insertSet(vacancies);
             vacancyDao.updateLastUpdateDate(new Date().getTime());
-        } catch (VacancyDaoException e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }
@@ -101,10 +94,9 @@ public class Application implements Job {
      */
     private Date getLastUpdate(Properties properties) {
         Date lastUpdate = null;
-        try {
-            VacancyDaoImpl vacancyDao = new VacancyDaoImpl(properties);
+        try (VacancyDao vacancyDao = new VacancyDao(properties)) {
             lastUpdate = vacancyDao.getLastUpdateDate();
-        } catch (VacancyDaoException e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
         return lastUpdate;
