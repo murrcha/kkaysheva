@@ -12,7 +12,7 @@ import java.util.Collection;
  * @version $Id$
  * @since 0.1
  */
-public class ValidateService {
+public class ValidateService implements Validate {
 
     private static final ValidateService INSTANCE = new ValidateService();
 
@@ -49,51 +49,58 @@ public class ValidateService {
     }
 
     /**
-     * Method add
-     * @param user object
+     * ${@inheritDoc}
      */
-    public void add(User user) {
+    @Override
+    public String add(User user) {
+        String result = "Error add user";
         if (!isUserExists(user.getId())) {
             store.add(user);
+            result = "User added";
         }
+        return result;
     }
 
     /**
-     * Method update
-     * @param id user
-     * @param user object
+     * ${@inheritDoc}
      */
-    public void update(int id, User user) {
+    @Override
+    public String update(int id, User user) {
         checkId(id);
+        String result = "Error update user";
         if (isUserExists(id)) {
             store.update(id, user);
+            result = "User updated";
         }
+        return result;
     }
 
     /**
-     * Method delete
-     * @param id user
+     * ${@inheritDoc}
      */
-    public void delete(int id) {
+    @Override
+    public String delete(int id) {
         checkId(id);
+        String result = "Error delete user";
         if (isUserExists(id)) {
             store.delete(id);
+            result = "User deleted";
         }
+        return result;
     }
 
     /**
-     * Method findAll
-     * @return users
+     * ${@inheritDoc}
      */
+    @Override
     public Collection<User> findAll() {
         return store.findAll();
     }
 
     /**
-     * Method findById
-     * @param id user
-     * @return user
+     * ${@inheritDoc}
      */
+    @Override
     public User findById(int id) {
         checkId(id);
         return isUserExists(id) ? store.findById(id) : null;
