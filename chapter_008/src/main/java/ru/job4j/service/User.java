@@ -38,8 +38,16 @@ public class User {
         return login;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
     }
 
     public void setLogin(String login) {
