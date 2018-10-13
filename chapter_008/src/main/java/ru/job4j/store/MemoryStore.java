@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
  * @version $Id$
  * @since 0.1
  */
-public class MemoryStore implements Store {
+public class MemoryStore implements Store<User> {
 
     private static final MemoryStore INSTANCE = new MemoryStore();
 
@@ -31,8 +31,9 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public void add(User user) {
+    public int add(User user) {
         users.put(user.getId(), user);
+        return user.getId();
     }
 
     @Override
@@ -43,6 +44,11 @@ public class MemoryStore implements Store {
     @Override
     public void delete(int id) {
         users.remove(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        users.clear();
     }
 
     @Override
