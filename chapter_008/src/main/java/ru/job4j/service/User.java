@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class User {
 
-    private static AtomicInteger count = new AtomicInteger(1);
+    private static final AtomicInteger COUNT = new AtomicInteger(1);
     private final int id;
     private String login;
     private String name;
@@ -36,7 +36,7 @@ public class User {
     }
 
     private int nextId() {
-        return count.getAndIncrement();
+        return COUNT.getAndIncrement();
     }
 
     public int getId() {
