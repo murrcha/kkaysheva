@@ -1,6 +1,6 @@
 package ru.job4j.service;
 
-import ru.job4j.store.MemoryStore;
+import ru.job4j.store.DBStore;
 import ru.job4j.store.Store;
 
 import java.util.Collection;
@@ -19,7 +19,7 @@ public class ValidateService implements Validate {
     /**
      * store
      */
-    private final Store store = MemoryStore.getInstance();
+    private final Store<User> store = DBStore.getInstance();
 
     private ValidateService() {
 
@@ -54,8 +54,8 @@ public class ValidateService implements Validate {
     @Override
     public String add(User user) {
         String result = "Error add user";
-        if (!isUserExists(user.getId())) {
-            store.add(user);
+        int id = store.add(user);
+        if (id > 0) {
             result = "User added";
         }
         return result;
@@ -87,6 +87,15 @@ public class ValidateService implements Validate {
             result = "User deleted";
         }
         return result;
+    }
+
+    /**
+     * ${@inheritDoc}
+     */
+    @Override
+    public String deleteAll() {
+        store.deleteAll();
+        return "Delete all users";
     }
 
     /**

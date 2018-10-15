@@ -1,6 +1,5 @@
 package ru.job4j.store;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.service.User;
@@ -20,7 +19,7 @@ import static org.junit.Assert.assertThat;
  */
 public class MemoryStoreTest {
 
-    private Store store;
+    private Store<User> store;
 
     @Before
     public void before() {

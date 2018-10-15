@@ -1,9 +1,8 @@
 package ru.job4j.service;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.store.MemoryStore;
-import ru.job4j.store.Store;
 
 import java.util.Date;
 
@@ -27,18 +26,20 @@ public class ValidateServiceTest {
         service = ValidateService.getInstance();
     }
 
+    @After
+    public void after() {
+        service.deleteAll();
+    }
+
     /**
      * Test add
      */
     @Test
     public void whenAddNewUserThenUserInMemory() {
         User user = new User("alex", "Alexander", "alex@mail.com", new Date());
-        assertThat(service.add(user), is("User added"));
-        assertThat(service.findAll().contains(user), is(true));
+        String result = service.add(user);
+        assertThat(result, is("User added"));
         assertThat(service.findAll().size(), is(1));
-        assertThat(service.add(user), is("Error add user"));
-        assertThat(service.findAll().size(), is(1));
-        service.delete(user.getId());
     }
 
     /**
@@ -48,14 +49,14 @@ public class ValidateServiceTest {
     public void whenUpdateUserThenUserUpdated() {
         User user = new User("alex", "Alexander", "alex@mail.com", new Date());
         assertThat(service.add(user), is("User added"));
-        assertThat(service.findAll().contains(user), is(true));
+        assertThat(service.findAll().size(), is(1));
+        user = service.findAll().iterator().next();
         user.setLogin("aaalexxx");
         user.setEmail("aaalexxx@me.com");
         assertThat(service.update(user.getId(), user), is("User updated"));
         assertThat(service.findById(user.getId()).getLogin(), is("aaalexxx"));
         assertThat(service.findById(user.getId()).getEmail(), is("aaalexxx@me.com"));
         assertThat(service.update(5, user), is("Error update user"));
-        service.delete(user.getId());
     }
 
     /**
@@ -65,9 +66,10 @@ public class ValidateServiceTest {
     public void whenDeleteUserThenUserNotInMemory() {
         User user = new User("alex", "Alexander", "alex@mail.com", new Date());
         assertThat(service.add(user), is("User added"));
-        assertThat(service.findAll().contains(user), is(true));
+        user = service.findAll().iterator().next();
+        assertThat(service.findAll().size(), is(1));
         assertThat(service.delete(user.getId()), is("User deleted"));
-        assertThat(service.findAll().contains(user), is(false));
+        assertThat(service.findAll().size(), is(0));
         assertThat(service.findAll().isEmpty(), is(true));
         assertThat(service.delete(5), is("Error delete user"));
     }
@@ -79,11 +81,11 @@ public class ValidateServiceTest {
     public void whenFindByIdUserThenReturnUserFromMemoryIfExists() {
         User user = new User("alex", "Alexander", "alex@mail.com", new Date());
         assertThat(service.add(user), is("User added"));
-        assertThat(service.findAll().contains(user), is(true));
-        assertThat(service.findById(user.getId()), is(user));
+        user = service.findAll().iterator().next();
+        assertThat(service.findAll().size(), is(1));
+        assertThat(service.findById(user.getId()).getLogin(), is(user.getLogin()));
         int fakeId = 3;
         assertThat(service.findById(fakeId), nullValue());
-        service.delete(user.getId());
     }
 
     /**
@@ -96,6 +98,5 @@ public class ValidateServiceTest {
         assertThat(service.add(user), is("User added"));
         assertThat(service.findAll().isEmpty(), is(false));
         assertThat(service.findAll().size(), is(1));
-        service.delete(user.getId());
     }
 }

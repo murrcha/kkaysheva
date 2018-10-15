@@ -26,6 +26,14 @@ public class User {
         this.createDate = createDate;
     }
 
+    public User(int id, String login, String name, String email, Date createDate) {
+        this.id = id;
+        this.login = login;
+        this.name = name;
+        this.email = email;
+        this.createDate = createDate;
+    }
+
     private int nextId() {
         return count++;
     }

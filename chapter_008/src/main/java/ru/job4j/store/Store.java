@@ -1,10 +1,6 @@
 package ru.job4j.store;
 
-
-import ru.job4j.service.User;
-
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Store
@@ -13,19 +9,19 @@ import java.util.List;
  * @version $Id$
  * @since 0.1
  */
-public interface Store {
+public interface Store<T> {
 
     /**
      * Method add user
      * @param user user
      */
-    void add(User user);
+    int add(T user);
 
     /**
      * Method update user
      * @param id user
      */
-    void update(int id, User user);
+    void update(int id, T user);
 
     /**
      * Method delete user
@@ -34,15 +30,20 @@ public interface Store {
     void delete(int id);
 
     /**
+     * Method delete all users
+     */
+    void deleteAll();
+
+    /**
      * Method findAll users
      * @return users
      */
-    Collection<User> findAll();
+    Collection<T> findAll();
 
     /**
      * Method findById user
      * @param id user
      * @return user
      */
-    User findById(int id);
+    T findById(int id);
 }

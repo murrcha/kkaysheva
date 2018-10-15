@@ -31,6 +31,11 @@ public interface Validate {
     String delete(int id);
 
     /**
+     * Method deleteALl
+     */
+    String deleteAll();
+
+    /**
      * Method findAll
      * @return users
      */
