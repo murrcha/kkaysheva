@@ -1,6 +1,7 @@
 package ru.job4j.service;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * User
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 public class User {
 
-    private static int count = 1;
+    private static AtomicInteger count = new AtomicInteger(1);
     private final int id;
     private String login;
     private String name;
@@ -35,7 +36,7 @@ public class User {
     }
 
     private int nextId() {
-        return count++;
+        return count.getAndIncrement();
     }
 
     public int getId() {
