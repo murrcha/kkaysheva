@@ -19,32 +19,32 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.UsersServlet</servlet-class>
+        <servlet-name>Users Controller Servlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.UsersController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/list</url-pattern>
+        <servlet-name>Users Controller Servlet</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserCreateServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.UserCreateServlet</servlet-class>
+        <servlet-name>User Create Controller Servlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.UserCreateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserCreateServlet</servlet-name>
+        <servlet-name>User Create Controller Servlet</servlet-name>
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>UserUpdateServlet</servlet-name>
-        <servlet-class>ru.job4j.servlets.UserUpdateServlet</servlet-class>
+        <servlet-name>User Update Controller Servlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.UserUpdateController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-name>User Update Controller Servlet</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
 </web-app>

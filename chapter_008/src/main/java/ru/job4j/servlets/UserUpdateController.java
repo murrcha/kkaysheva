@@ -3,19 +3,32 @@ package ru.job4j.servlets;
 import ru.job4j.service.User;
 import ru.job4j.service.ValidateService;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * UserUpdateServlet
+ * UserUpdateController
  *
  * @author Ksenya Kaysheva (murrcha@me.com)
  * @version $Id$
  * @since 0.1
  */
-public class UserUpdateServlet extends HttpServlet {
+public class UserUpdateController extends HttpServlet {
+
+    /**
+     * ${@inheritDoc}
+     */
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("user",
+                ValidateService
+                        .getInstance()
+                        .findById(Integer.valueOf(req.getParameter("id"))));
+        req.getRequestDispatcher("/WEB-INF/views/UserEditView.jsp").forward(req, resp);
+    }
 
     /**
      * ${@inheritDoc}
@@ -28,6 +41,6 @@ public class UserUpdateServlet extends HttpServlet {
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         ValidateService.getInstance().update(user.getId(), user);
-        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

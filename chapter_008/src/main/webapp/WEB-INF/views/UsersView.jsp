@@ -1,5 +1,3 @@
-<%@ page import="ru.job4j.service.ValidateService" %>
-<%@ page import="ru.job4j.service.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: kkaysheva
@@ -8,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Users</title>
@@ -23,29 +23,24 @@
         <th>Created</th>
         <th>Action</th>
     </tr>
-    <%for (User user : ValidateService.getInstance().findAll()) {%>
+    <c:forEach items="${users}" var="user">
     <tr>
-        <td><%=user.getId()%>
-        </td>
-        <td><%=user.getLogin()%>
-        </td>
-        <td><%=user.getName()%>
-        </td>
-        <td><%=user.getEmail()%>
-        </td>
-        <td><%=user.getCreateDate()%>
-        </td>
+        <td><c:out value="${user.id}"/></td>
+        <td><c:out value="${user.login}"/></td>
+        <td><c:out value="${user.name}"/></td>
+        <td><c:out value="${user.email}"/></td>
+        <td><c:out value="${user.createDate}"/></td>
         <td>
-            <form action="<%=request.getContextPath()%>/edit.jsp" method="get">
-                <input type="hidden" name="id" value="<%=user.getId()%>"/>
+            <form action="${pageContext.servletContext.contextPath}/edit" method="get">
+                <input type="hidden" name="id" value="${user.id}"/>
                 <input type="submit" value="EDIT"/>
             </form>
         </td>
     </tr>
-    <% } %>
+    </c:forEach>
 </table>
 <br/>
-<form action="<%=request.getContextPath()%>/create.jsp" method="get">
+<form action="${pageContext.servletContext.contextPath}/create" method="get">
     <input type="submit" value="CREATE NEW USER"/>
 </form>
 </body>
