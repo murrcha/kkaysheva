@@ -48,6 +48,8 @@ public class UserServlet extends HttpServlet {
                         request.getParameter("login"),
                         request.getParameter("name"),
                         request.getParameter("email"),
+                        "123",
+                        2,
                         new Date()));
     }
 

@@ -41,11 +41,12 @@ public class DBStore implements Store<User> {
         } catch (ClassNotFoundException e) {
             LOG.error(e.getMessage(), e);
         }
-        SOURCE.setUrl("jdbc:sqlite:dbstore.db");
+        SOURCE.setUrl("jdbc:sqlite:dbstore.sqlite");
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
-        createTable();
+        createTables();
+        insertData();
     }
 
     public static DBStore getInstance() {
@@ -53,20 +54,57 @@ public class DBStore implements Store<User> {
     }
 
     /**
-     * Method createTable users
+     * Method createTables
      */
-    private void createTable() {
-        String sql = "create table if not exists users("
+    private void createTables() {
+        String createRoles = "create table if not exists roles("
                 + "id integer primary key autoincrement not null, "
-                + "login text not null, "
-                + "name text not null, "
-                + "email text not null, "
+                + "role text unique not null);";
+        String createUsers = "create table if not exists users("
+                + "id integer primary key autoincrement not null, "
+                + "login text unique not null, "
+                + "name text , "
+                + "email text , "
+                + "password text not null, "
+                + "role_id integer references roles(id) not null, "
                 + "created numeric not null);";
         try (Connection connection = SOURCE.getConnection();
-            Statement statement = connection.createStatement()
+             Statement stRoles = connection.createStatement();
+             Statement stUsers = connection.createStatement()
         ) {
-            statement.executeUpdate(sql);
+            stRoles.executeUpdate(createRoles);
+            LOG.info("create table roles if not exists");
+            stUsers.executeUpdate(createUsers);
             LOG.info("create table users if not exists");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Method insertData
+     */
+    private void insertData() {
+        String insertRoles = "insert or ignore into roles (role) values(?), (?);";
+        String insertAdmin = "insert or ignore into users "
+                + "(login, name, email, password, role_id, created) "
+                + "values (?, ?, ?, ?, ?, ?);";
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement stRoles = connection.prepareStatement(insertRoles);
+             PreparedStatement stAdmin = connection.prepareStatement(insertAdmin)
+        ) {
+            stRoles.setString(1, "admin");
+            stRoles.setString(2, "user");
+            stRoles.executeUpdate();
+            LOG.info("insert roles admin and user");
+            stAdmin.setString(1, "admin");
+            stAdmin.setString(2, "admin");
+            stAdmin.setString(3, "admin@admin");
+            stAdmin.setString(4, "admin");
+            stAdmin.setInt(5, 1);
+            stAdmin.setDate(6, new Date(new java.util.Date().getTime()));
+            stAdmin.executeUpdate();
+            LOG.info("insert admin into users");
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -93,7 +131,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public int add(User user) {
-        String sql = "insert into users (login, name, email, created) values(?, ?, ?, ?);";
+        String sql = "insert into users (login, name, email, password, role_id, created) values(?, ?, ?, ?, ?, ?);";
         int result = -1;
         ResultSet resultSet = null;
         try (Connection connection = SOURCE.getConnection();
@@ -102,7 +140,9 @@ public class DBStore implements Store<User> {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getName());
             statement.setString(3, user.getEmail());
-            statement.setDate(4, new Date(user.getCreateDate().getTime()));
+            statement.setString(4, user.getPassword());
+            statement.setInt(5, user.getRole());
+            statement.setDate(6, new Date(user.getCreateDate().getTime()));
             statement.executeUpdate();
             LOG.info("insert new user");
             resultSet = statement.getGeneratedKeys();
@@ -130,14 +170,16 @@ public class DBStore implements Store<User> {
      */
     @Override
     public void update(int id, User user) {
-        String sql = "update users set login=?, name=?, email=? where id=?;";
+        String sql = "update users set login=?, name=?, email=?, password=?, role_id=? where id=?;";
         try (Connection connection = SOURCE.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getName());
             statement.setString(3, user.getEmail());
-            statement.setInt(4, id);
+            statement.setString(4, user.getPassword());
+            statement.setInt(5, user.getRole());
+            statement.setInt(6, id);
             statement.executeUpdate();
             LOG.info("update user");
         } catch (SQLException e) {
@@ -169,7 +211,7 @@ public class DBStore implements Store<User> {
     public Collection<User> findAll() {
         Collection<User> users = new ArrayList<>();
         ResultSet resultSet = null;
-        String sql = "select id, login, name, email, created from users;";
+        String sql = "select id, login, name, email, password, role_id, created from users;";
         try (Connection connection = SOURCE.getConnection();
              Statement statement = connection.createStatement()
         ) {
@@ -181,6 +223,8 @@ public class DBStore implements Store<User> {
                     resultSet.getString("login"),
                     resultSet.getString("name"),
                     resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getInt("role_id"),
                     resultSet.getDate("created")
                 );
                 users.add(user);
@@ -204,7 +248,7 @@ public class DBStore implements Store<User> {
      */
     @Override
     public User findById(int id) {
-        String sql = "select id, login, name, email, created from users where id=?;";
+        String sql = "select id, login, name, email, password, role_id, created from users where id=?;";
         User user = null;
         ResultSet resultSet = null;
         try (Connection connection = SOURCE.getConnection();
@@ -219,6 +263,8 @@ public class DBStore implements Store<User> {
                         resultSet.getString("login"),
                         resultSet.getString("name"),
                         resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("role_id"),
                         resultSet.getDate("created")
                 );
             }

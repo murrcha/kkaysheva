@@ -40,6 +40,8 @@ public class UserUpdateController extends HttpServlet {
         user.setLogin(req.getParameter("login"));
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
+        user.setPassword(req.getParameter("password"));
+        user.setRole(Integer.valueOf(req.getParameter("role")));
         ValidateService.getInstance().update(user.getId(), user);
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }

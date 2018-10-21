@@ -19,7 +19,7 @@ public class ValidateService implements Validate {
     /**
      * store
      */
-    private final Store<User> store = DBStore.getInstance();
+    private final Store<User> store = DBStore.getInstance();;
 
     private ValidateService() {
 
@@ -46,6 +46,23 @@ public class ValidateService implements Validate {
      */
     private boolean isUserExists(int id) {
         return store.findById(id) != null;
+    }
+
+    /**
+     * Method isSuccessAuth
+     * @param login user
+     * @param password user
+     * @return id user if exists or -1 if not existså
+     */
+    public int isSuccessAuth(String login, String password) {
+        int result = -1;
+        for (User user : store.findAll()) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                result = user.getId();
+                break;
+            }
+        }
+        return result;
     }
 
     /**

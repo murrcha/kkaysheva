@@ -36,7 +36,7 @@ public class ValidateServiceTest {
      */
     @Test
     public void whenAddNewUserThenUserInMemory() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         String result = service.add(user);
         assertThat(result, is("User added"));
         assertThat(service.findAll().size(), is(1));
@@ -47,7 +47,7 @@ public class ValidateServiceTest {
      */
     @Test
     public void whenUpdateUserThenUserUpdated() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         assertThat(service.add(user), is("User added"));
         assertThat(service.findAll().size(), is(1));
         user = service.findAll().iterator().next();
@@ -56,7 +56,7 @@ public class ValidateServiceTest {
         assertThat(service.update(user.getId(), user), is("User updated"));
         assertThat(service.findById(user.getId()).getLogin(), is("aaalexxx"));
         assertThat(service.findById(user.getId()).getEmail(), is("aaalexxx@me.com"));
-        assertThat(service.update(5, user), is("Error update user"));
+        assertThat(service.update(555, user), is("Error update user"));
     }
 
     /**
@@ -64,14 +64,14 @@ public class ValidateServiceTest {
      */
     @Test
     public void whenDeleteUserThenUserNotInMemory() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         assertThat(service.add(user), is("User added"));
         user = service.findAll().iterator().next();
         assertThat(service.findAll().size(), is(1));
         assertThat(service.delete(user.getId()), is("User deleted"));
         assertThat(service.findAll().size(), is(0));
         assertThat(service.findAll().isEmpty(), is(true));
-        assertThat(service.delete(5), is("Error delete user"));
+        assertThat(service.delete(555), is("Error delete user"));
     }
 
     /**
@@ -79,10 +79,10 @@ public class ValidateServiceTest {
      */
     @Test
     public void whenFindByIdUserThenReturnUserFromMemoryIfExists() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         assertThat(service.add(user), is("User added"));
         user = service.findAll().iterator().next();
-        assertThat(service.findAll().size(), is(1));
+        assertThat(service.findAll().size(), is(2));
         assertThat(service.findById(user.getId()).getLogin(), is(user.getLogin()));
         int fakeId = 3;
         assertThat(service.findById(fakeId), nullValue());
@@ -94,7 +94,7 @@ public class ValidateServiceTest {
     @Test
     public void whenFindAllThenReturnAllUserFromMemory() {
         assertThat(service.findAll().isEmpty(), is(true));
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         assertThat(service.add(user), is("User added"));
         assertThat(service.findAll().isEmpty(), is(false));
         assertThat(service.findAll().size(), is(1));

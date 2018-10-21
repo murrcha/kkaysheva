@@ -29,6 +29,19 @@
             <td><input required type="text" name="email" placeholder="email@site.com"></td>
         </tr>
         <tr>
+            <th>Password</th>
+            <td><input required type="text" name="password" placeholder="*****"></td>
+        </tr>
+        <tr>
+            <th>Role</th>
+            <td>
+                <select name="role">
+                    <option value="1">***ADMIN***</option>
+                    <option value="2" selected>***USER***</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <br/>
             <td colspan="2"><input type="submit" value="CREATE"></td>
         </tr>

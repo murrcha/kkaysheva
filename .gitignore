@@ -33,5 +33,6 @@ target
 
 #db
 *.db
+*.sqlite
 entries.xml
 result.xml

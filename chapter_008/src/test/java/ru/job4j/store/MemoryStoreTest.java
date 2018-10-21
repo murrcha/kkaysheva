@@ -31,7 +31,7 @@ public class MemoryStoreTest {
      */
     @Test
     public void whenAddUserThenUserInMemory() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         store.add(user);
         assertThat(store.findAll().contains(user), is(true));
         assertThat(store.findAll().size(), is(1));
@@ -45,7 +45,7 @@ public class MemoryStoreTest {
      */
     @Test
     public void whenUpdateUserThenUserInMemoryUpdated() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         store.add(user);
         assertThat(store.findAll().contains(user), is(true));
         user.setLogin("aaalexxx");
@@ -61,7 +61,7 @@ public class MemoryStoreTest {
      */
     @Test
     public void whenDeleteUserThenUserNotInMemory() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         store.add(user);
         assertThat(store.findAll().contains(user), is(true));
         store.delete(user.getId());
@@ -75,7 +75,7 @@ public class MemoryStoreTest {
      */
     @Test
     public void whenFindByIdUserThenReturnUserFromMemoryIfExists() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         store.add(user);
         assertThat(store.findAll().contains(user), is(true));
         assertThat(store.findById(user.getId()), is(user));
@@ -90,7 +90,7 @@ public class MemoryStoreTest {
     @Test
     public void whenFindAllThenReturnAllUserFromMemory() {
         assertThat(store.findAll().isEmpty(), is(true));
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         store.add(user);
         assertThat(store.findAll().isEmpty(), is(false));
         assertThat(store.findAll().size(), is(1));

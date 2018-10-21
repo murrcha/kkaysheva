@@ -1,6 +1,7 @@
 package ru.job4j.servlets;
 
 import ru.job4j.service.User;
+import ru.job4j.service.Validate;
 import ru.job4j.service.ValidateService;
 
 import javax.servlet.ServletException;
@@ -37,6 +38,8 @@ public class UserCreateController extends HttpServlet {
                 req.getParameter("login"),
                 req.getParameter("name"),
                 req.getParameter("email"),
+                req.getParameter("password"),
+                Integer.valueOf(req.getParameter("role")),
                 new Date()
         ));
         resp.sendRedirect(String.format("%s/", req.getContextPath()));

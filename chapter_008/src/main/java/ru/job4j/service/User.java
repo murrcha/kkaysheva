@@ -17,21 +17,27 @@ public class User {
     private String login;
     private String name;
     private String email;
+    private String password;
+    private int role;
     private final Date createDate;
 
-    public User(String login, String name, String email, Date createDate) {
+    public User(String login, String name, String email, String password, int role, Date createDate) {
         this.id = nextId();
         this.login = login;
         this.name = name;
         this.email = email;
+        this.password = password;
+        this.role = role;
         this.createDate = createDate;
     }
 
-    public User(int id, String login, String name, String email, Date createDate) {
+    public User(int id, String login, String name, String email, String password, int role,  Date createDate) {
         this.id = id;
         this.login = login;
         this.name = name;
         this.email = email;
+        this.password = password;
+        this.role = role;
         this.createDate = createDate;
     }
 
@@ -55,6 +61,14 @@ public class User {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -69,6 +83,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     @Override

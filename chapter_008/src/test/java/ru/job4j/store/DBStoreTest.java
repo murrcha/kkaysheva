@@ -38,7 +38,7 @@ public class DBStoreTest {
      */
     @Test
     public void whenAddUserInDBStoreThenUserInDBStore() {
-        User user = new User("alex", "Alexander", "alex@mail.com", new Date());
+        User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         int id = store.add(user);
         assertThat(store.findById(id).getLogin(), is(user.getLogin()));
         assertThat(store.findById(id).getName(), is(user.getName()));
@@ -50,7 +50,7 @@ public class DBStoreTest {
      */
     @Test
     public void whenUpdateUserInDBStoreThenUserUpdated() {
-        User user = new User("katy", "Katya", "kat@mail.com", new Date());
+        User user = new User("katy", "Katya", "kat@mail.com", "123", 2, new Date());
         int id = store.add(user);
         assertThat(store.findById(id).getLogin(), is(user.getLogin()));
         user.setLogin("katusha");
@@ -67,7 +67,7 @@ public class DBStoreTest {
      */
     @Test
     public void whenDeleteUserFromDBStoreThenUserNotExistsInDBStore() {
-        User user = new User("katy", "Katya", "kat@mail.com", new Date());
+        User user = new User("katy", "Katya", "kat@mail.com", "123", 2, new Date());
         int id = store.add(user);
         assertThat(store.findById(id).getLogin(), is(user.getLogin()));
         store.delete(id);
@@ -79,7 +79,7 @@ public class DBStoreTest {
      */
     @Test
     public void whenFindByIdUserThenReturnUserOrNull() {
-        User user = new User("katy", "Katya", "kat@mail.com", new Date());
+        User user = new User("katy", "Katya", "kat@mail.com", "123", 2, new Date());
         int id = store.add(user);
         assertThat(store.findById(id).getLogin(), is(user.getLogin()));
         assertThat(store.findById(0), nullValue());
@@ -90,7 +90,8 @@ public class DBStoreTest {
      */
     @Test
     public void whenFindAllUsersThenReturnCollectionUsers() {
-        User user = new User("katy", "Katya", "kat@mail.com", new Date());
+        store.deleteAll();
+        User user = new User("katy", "Katya", "kat@mail.com", "123", 2, new Date());
         store.add(user);
         Collection<User> users = store.findAll();
         assertThat(users.isEmpty(), is(false));
@@ -102,7 +103,7 @@ public class DBStoreTest {
      */
     @Test
     public void whenClearTableUsersThenDBStoreEmpty() {
-        User user = new User("katy", "Katya", "kat@mail.com", new Date());
+        User user = new User("katy", "Katya", "kat@mail.com", "123", 2, new Date());
         store.add(user);
         store.deleteAll();
         assertThat(store.findAll().isEmpty(), is(true));
