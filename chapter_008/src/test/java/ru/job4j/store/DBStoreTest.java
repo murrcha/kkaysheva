@@ -26,10 +26,6 @@ public class DBStoreTest {
     @Before
     public void before() {
         store = DBStore.getInstance();
-    }
-
-    @After
-    public void after() {
         store.deleteAll();
     }
 

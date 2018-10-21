@@ -24,10 +24,6 @@ public class ValidateServiceTest {
     @Before
     public void before() {
         service = ValidateService.getInstance();
-    }
-
-    @After
-    public void after() {
         service.deleteAll();
     }
 
@@ -82,9 +78,9 @@ public class ValidateServiceTest {
         User user = new User("alex", "Alexander", "alex@mail.com", "123", 2, new Date());
         assertThat(service.add(user), is("User added"));
         user = service.findAll().iterator().next();
-        assertThat(service.findAll().size(), is(2));
+        assertThat(service.findAll().size(), is(1));
         assertThat(service.findById(user.getId()).getLogin(), is(user.getLogin()));
-        int fakeId = 3;
+        int fakeId = 333;
         assertThat(service.findById(fakeId), nullValue());
     }
 
