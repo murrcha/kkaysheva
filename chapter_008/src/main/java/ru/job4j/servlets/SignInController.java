@@ -43,13 +43,10 @@ public class SignInController extends HttpServlet {
         int existsId = ValidateService.getInstance().isSuccessAuth(login, password);
         if (existsId != -1) {
             HttpSession session = req.getSession();
-            //noinspection SynchronizationOnLocalVariableOrMethodParameter
-            synchronized (session) {
-                session.setAttribute("login", login);
-                int role = ValidateService.getInstance().findById(existsId).getRole();
-                session.setAttribute("role", role);
-                LOG.info(String.format("sign in user login=%s, role=%s", login, role));
-            }
+            session.setAttribute("login", login);
+            int role = ValidateService.getInstance().findById(existsId).getRole();
+            session.setAttribute("role", role);
+            LOG.info(String.format("sign in user login=%s, role=%s", login, role));
             resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } else {
             req.setAttribute("error", "invalid login or password");

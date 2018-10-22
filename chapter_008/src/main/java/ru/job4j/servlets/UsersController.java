@@ -40,11 +40,8 @@ public class UsersController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
-        //noinspection SynchronizationOnLocalVariableOrMethodParameter
-        synchronized (session) {
-            session.invalidate();
-            LOG.info("user logout");
-        }
+        session.invalidate();
+        LOG.info("user logout");
         resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
     }
 }
