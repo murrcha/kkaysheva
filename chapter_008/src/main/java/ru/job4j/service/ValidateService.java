@@ -25,7 +25,7 @@ public class ValidateService implements Validate {
 
     }
 
-    public static ValidateService getInstance() {
+    public static Validate getInstance() {
         return INSTANCE;
     }
 
@@ -46,23 +46,6 @@ public class ValidateService implements Validate {
      */
     private boolean isUserExists(int id) {
         return store.findById(id) != null;
-    }
-
-    /**
-     * Method isSuccessAuth
-     * @param login user
-     * @param password user
-     * @return id user if exists or -1 if not existså
-     */
-    public int isSuccessAuth(String login, String password) {
-        int result = -1;
-        for (User user : store.findAll()) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                result = user.getId();
-                break;
-            }
-        }
-        return result;
     }
 
     /**
@@ -130,5 +113,20 @@ public class ValidateService implements Validate {
     public User findById(int id) {
         checkId(id);
         return isUserExists(id) ? store.findById(id) : null;
+    }
+
+    /**
+     * ${@inheritDoc}
+     */
+    @Override
+    public int isSuccessAuth(String login, String password) {
+        int result = -1;
+        for (User user : store.findAll()) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                result = user.getId();
+                break;
+            }
+        }
+        return result;
     }
 }

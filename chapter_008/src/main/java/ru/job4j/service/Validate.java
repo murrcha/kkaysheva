@@ -47,4 +47,12 @@ public interface Validate {
      * @return user
      */
     User findById(int id);
+
+    /**
+     * Method isSuccessAuth
+     * @param login user
+     * @param password user
+     * @return id user or -1 if not exists
+     */
+    int isSuccessAuth(String login, String password);
 }
