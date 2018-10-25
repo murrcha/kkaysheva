@@ -7,21 +7,35 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var result = true;
+            if (document.getElementById('firstname').value == '' ||
+                    document.getElementById('lastname').value == '' ||
+                    document.getElementById('description').value == '') {
+                result = false;
+            }
+            if (!result) {
+                alert('Please fill fields')
+            }
+            return result;
+        }
+    </script>
 </head>
 <body>
 <div class="container" >
     <h1>First Bootstrap Page</h1>
 </div>
 <br>
-<form class="form-horizontal" action="/index.html">
+<form class="form-horizontal" action="index.html" onsubmit="return validate();">
     <div class="form-group">
-        <label class="control-label col-sm-2" for="firstname">Firstname:</label>
+        <label class="control-label col-sm-2" for="firstname">First Name:</label>
         <div class="col-sm-2">
             <input type="text" class="form-control" id="firstname" placeholder="Enter Firstname">
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-sm-2" for="lastname">Lastname:</label>
+        <label class="control-label col-sm-2" for="lastname">Last Name:</label>
         <div class="col-sm-2">
             <input type="text" class="form-control" id="lastname" placeholder="Enter Lastname">
         </div>
@@ -30,7 +44,7 @@
         <label class="control-label col-sm-2">Sex:</label>
         <div class="col-sm-2">
             <div class=".radio-inline">
-                <label class="radio-inline"><input type="radio" name="sex">Male</label>
+                <label class="radio-inline"><input type="radio" name="sex" checked>Male</label>
                 <label class="radio-inline"><input type="radio" name="sex">Female</label>
             </div>
         </div>
@@ -38,7 +52,7 @@
     <div class="form-group">
         <label class="control-label col-sm-2" for="description">Description:</label>
         <div class="col-sm-2">
-            <textarea class="form-control" id="description" placeholder="Enter description"></textarea>
+            <textarea class="form-control" id="description" rows="3" placeholder="Enter description"></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -53,8 +67,8 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Sex</th>
             <th>Description</th>
         </tr>
