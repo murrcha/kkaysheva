@@ -12,7 +12,7 @@ public abstract class Figure {
     /**
      * Позиция фигуры
      */
-    protected final Cell position;
+    public final Cell position;
 
     /**
      * Конструктор - с инициализацией позиции
@@ -30,14 +30,14 @@ public abstract class Figure {
      * @return массив ячеек
      * @throws ImpossibleMoveException
      */
-    abstract Cell[] way(Cell source, Cell destination) throws ImpossibleMoveException;
+    public abstract Cell[] way(Cell source, Cell destination) throws ImpossibleMoveException;
 
     /**
      * Method copy - создает объект Figure с позицией
      * @param destination - позиция
      * @return объект Figure
      */
-    abstract Figure copy(Cell destination);
+    public abstract Figure copy(Cell destination);
 
     /**
      * Method isOccupied - проверяет занимает ли фигура передаваемую позицию
