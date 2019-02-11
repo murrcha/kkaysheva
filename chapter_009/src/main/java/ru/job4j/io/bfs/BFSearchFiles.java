@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * BFSearchFiles - breadth-first search files
@@ -19,10 +20,10 @@ public class BFSearchFiles {
         List<File> result = new ArrayList<>();
         Deque<File> directories = new LinkedList<>();
         if (parentFile.isDirectory()) {
-            parseDirectory(parentFile, directories, result, exts);
+            directories.add(parentFile);
             while (!directories.isEmpty()) {
-                File file = directories.removeFirst();
-                parseDirectory(file, directories, result, exts);
+                File directory = directories.removeFirst();
+                parseDirectory(directory, directories, result, exts);
             }
         } else {
             throw new IllegalArgumentException("Argument parent is not directory");
