@@ -1,6 +1,13 @@
 package ru.job4j.io.chat;
 
-import java.io.*;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  * AnswerFileSource
@@ -10,20 +17,21 @@ import java.io.*;
  */
 public class AnswerFileSource implements AnswerSource {
 
-    private final String file;
+    private final List<String> phrases = new ArrayList<>();
+    private final Random random = new Random();
 
-    public AnswerFileSource(String file) {
-        this.file = file;
+    public AnswerFileSource(URI fileUri) throws IOException {
+        readPhraseFromFile(fileUri);
     }
 
     @Override
     public String getAnswer() {
-        String phrase = "";
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            phrase = reader.lines().findAny().orElse("any");
-        } catch (IOException e) {
-            e.printStackTrace();
+        return phrases.get(random.nextInt(phrases.size()));
+    }
+
+    private void readPhraseFromFile(URI file) throws IOException {
+        try (Stream<String> linesStream = Files.lines(Paths.get(file))) {
+            linesStream.forEach(phrases::add);
         }
-        return phrase;
     }
 }

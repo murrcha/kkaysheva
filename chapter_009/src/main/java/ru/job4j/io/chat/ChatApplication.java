@@ -1,6 +1,9 @@
 package ru.job4j.io.chat;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 /**
@@ -12,15 +15,23 @@ import java.util.Objects;
 public class ChatApplication {
 
     public static void main(String[] args) {
-        String filePath;
+        URI fileUri = null;
         if (args.length == 0 || !new File(args[0]).exists()) {
-            ClassLoader loader = ChatApplication.class.getClassLoader();
-            filePath = Objects.requireNonNull(loader.getResource("phrases.txt")).getPath();
+            try {
+                ClassLoader loader = ChatApplication.class.getClassLoader();
+                fileUri = Objects.requireNonNull(loader.getResource("phrases.txt")).toURI();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         } else {
-            filePath = args[0];
+            fileUri = URI.create(args[0]);
         }
-        AnswerSource source = new AnswerFileSource(filePath);
-        ConsoleChat chat = new ConsoleChat(System.in, System.out, source);
-        chat.chat();
+        try {
+            AnswerSource source = new AnswerFileSource(fileUri);
+            ConsoleChat chat = new ConsoleChat(System.in, System.out, source);
+            chat.chat();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
