@@ -3,6 +3,7 @@ package ru.job4j.io;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.job4j.io.bfs.BFSearchFiles;
 
 import java.io.File;
 import java.io.IOException;

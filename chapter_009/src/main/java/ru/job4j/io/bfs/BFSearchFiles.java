@@ -1,11 +1,10 @@
-package ru.job4j.io;
+package ru.job4j.io.bfs;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.*;
 
 /**
  * BFSearchFiles - breadth-first search files
@@ -40,16 +39,15 @@ public class BFSearchFiles {
             for (File file : files) {
                 if (file.isDirectory()) {
                     directories.addLast(file);
-                } else {
-                    if (isFileInExts(file, exts)) {
-                        result.add(file);
-                    }
+                } else if (isFileInExts(file, exts)) {
+                    result.add(file);
                 }
             }
         }
     }
 
-    private boolean isFileInExts(File file, List<String> exts) {
+    @SuppressWarnings("Duplicates")
+    protected boolean isFileInExts(File file, List<String> exts) {
         boolean result = false;
         for (String ext : exts) {
             if (file.getName().endsWith(ext)) {
